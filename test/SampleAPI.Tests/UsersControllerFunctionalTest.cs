@@ -132,5 +132,66 @@ namespace SampleAPI.Tests
             Assert.NotNull(resultUser.CreatedAt);
             Assert.NotNull(resultUser.UpdatedAt);
         }
+
+
+        [Fact]
+        public async Task Delete_WithoutUsername_ReturnsError()
+        {
+            // Execute
+            var response = await _client.DeleteAsync(
+                $"{Endpoints.USERS}/unknown");
+
+
+            // Check
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+
+        [Fact]
+        public async Task Update_username()
+        {
+            // Prepare
+            var updateUserCommand = new UpdateUserCommand
+            {
+                IsActive = true,
+                Email = "hola@hotmail.com"
+            };
+
+            // Execute
+            var responseUpdate = await _client.PutAsJsonAsync($"{Endpoints.USERS}/{SeedExtensions.UsersSeed.FirstOrDefault().Username}", updateUserCommand);
+
+            Assert.Equal(HttpStatusCode.NoContent, responseUpdate.StatusCode);
+
+        }
+
+
+        [Fact]
+        public async Task Update_WithoutUsername_ReturnsError()
+        {
+            // Prepare
+            var updateUserCommand = new UpdateUserCommand
+            {
+                IsActive = true,
+                Email = "hola@hotmail.com"
+            };
+
+            // Execute
+            var responseUpdate = await _client.PutAsJsonAsync($"{Endpoints.USERS}/unknown", updateUserCommand);
+
+            Assert.Equal(HttpStatusCode.NotFound, responseUpdate.StatusCode);
+
+        }
+
+        [Fact]
+        public async Task Delete_username()
+        {
+            // Execute
+            var response = await _client.DeleteAsync(
+                 $"{Endpoints.USERS}/{SeedExtensions.UsersSeed.FirstOrDefault().Username}");
+
+
+            // Check
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        }
     }
 }
