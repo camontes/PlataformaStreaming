@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SampleAPI.Infrastructure;
 
 namespace SampleAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191109005235_UserNewFields")]
+    partial class UserNewFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,13 +48,10 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Username = "Mr. Sample",
-                            CreatedAt = new DateTime(2019, 11, 8, 20, 8, 7, 627, DateTimeKind.Local).AddTicks(4303),
+                            CreatedAt = new DateTime(2019, 11, 8, 19, 52, 34, 618, DateTimeKind.Local).AddTicks(7223),
                             Email = "sample@email.com",
                             IsActive = true,
-                            LastName = "Sample",
-                            Name = "Mr.",
-                            Photo = "photo.png",
-                            UpdatedAt = new DateTime(2019, 11, 8, 20, 8, 7, 629, DateTimeKind.Local).AddTicks(653)
+                            UpdatedAt = new DateTime(2019, 11, 8, 19, 52, 34, 636, DateTimeKind.Local).AddTicks(6963)
                         });
                 });
 #pragma warning restore 612, 618

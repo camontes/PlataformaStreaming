@@ -13,6 +13,9 @@ namespace SampleAPI.Infrastructure
             {
                 Username = "Mr. Sample",
                 Email = "sample@email.com",
+                Name="Mr.",
+                LastName="Sample",
+                Photo="photo.png",
                 IsActive = true,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now

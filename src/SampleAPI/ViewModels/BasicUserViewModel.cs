@@ -11,6 +11,12 @@ namespace SampleAPI.ViewModels
 
         public string Email { get; set; }
 
+        public string Name { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Photo { get; set; }
+
         public bool IsActive { get; set; }
     }
 }
