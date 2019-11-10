@@ -6,31 +6,31 @@ using SampleAPI.Domain;
 
 namespace SampleAPI.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class CategoryRepository : ICategoryRepository
     {
         protected readonly ApplicationDbContext _context;
 
-        public UserRepository(ApplicationDbContext context)
+        public CategoryRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
 
-        public async Task CreateUserAsync(User user)
+        public async Task CreateCategoryAsync(Category category)
         {
-            _context.Users.Add(user);
+            _context.Categories.Add(category);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateCategoryAsync(Category category)
         {
-            _context.Users.Update(user);
+            _context.Categories.Update(category);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAsync(User user)
+        public async Task DeleteCategoryAsync(Category category)
         {
-            _context.Users.Remove(user);
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
         }
     }

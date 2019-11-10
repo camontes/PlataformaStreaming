@@ -22,10 +22,27 @@ namespace SampleAPI.Infrastructure
             }
         };
 
+        public static readonly Category[] CategoriesSeed = new Category[] {
+            new Category
+            {
+                Id=1,
+                Name="Video Juegos",
+                Description="En esta categoria encontrarás cursos de Blender y Unreal",
+                IsActive=true,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+
+
+            }
+        };
+
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
                UsersSeed
+            );
+            modelBuilder.Entity<Category>().HasData(
+               CategoriesSeed
             );
         }
     }

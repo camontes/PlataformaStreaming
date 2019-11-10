@@ -42,9 +42,17 @@ namespace SampleAPI
             );
 
             // Add other components
+
+            /// User
             services.AddScoped<IUserBehavior, UserBehavior>();
             services.AddScoped<IUserQueries, UserQueries>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            /// Category
+            services.AddScoped<ICategoryBehavior, CategoryBehavior>();
+            services.AddScoped<ICategoryQueries, CategoryQuerys>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+
 
             // Add Automapper
             services.AddAutoMapper();

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SampleAPI.Infrastructure;
 
 namespace SampleAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191109051008_Fix Category HttpPost")]
+    partial class FixCategoryHttpPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,11 +45,11 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2019, 11, 9, 0, 26, 5, 756, DateTimeKind.Local).AddTicks(9669),
+                            CreatedAt = new DateTime(2019, 11, 9, 0, 10, 7, 696, DateTimeKind.Local).AddTicks(8513),
                             Description = "En esta categoria encontrarás cursos de Blender y Unreal",
                             IsActive = true,
                             Name = "Video Juegos",
-                            UpdatedAt = new DateTime(2019, 11, 9, 0, 26, 5, 757, DateTimeKind.Local).AddTicks(629)
+                            UpdatedAt = new DateTime(2019, 11, 9, 0, 10, 7, 696, DateTimeKind.Local).AddTicks(9649)
                         });
                 });
 
@@ -78,13 +80,13 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Username = "Mr. Sample",
-                            CreatedAt = new DateTime(2019, 11, 9, 0, 26, 5, 754, DateTimeKind.Local).AddTicks(8222),
+                            CreatedAt = new DateTime(2019, 11, 9, 0, 10, 7, 692, DateTimeKind.Local).AddTicks(447),
                             Email = "sample@email.com",
                             IsActive = true,
                             LastName = "Sample",
                             Name = "Mr.",
                             Photo = "photo.png",
-                            UpdatedAt = new DateTime(2019, 11, 9, 0, 26, 5, 756, DateTimeKind.Local).AddTicks(3505)
+                            UpdatedAt = new DateTime(2019, 11, 9, 0, 10, 7, 696, DateTimeKind.Local).AddTicks(1547)
                         });
                 });
 #pragma warning restore 612, 618

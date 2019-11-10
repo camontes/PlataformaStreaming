@@ -75,8 +75,11 @@ namespace SampleAPI.Tests
             // Prepare
             var createUserCommand = new CreateUserCommand
             {
-                Username = "Mr. Test",
-                Email = "something@nothing.com"
+                Username = "Mr. ejemplo",
+                Name = "ejemplo.",
+                LastName = "SamplePrueba",
+                Photo = "photo.jpg",
+                Email = "sample@bancolombia.com"  
             };
 
             // Execute
@@ -87,6 +90,9 @@ namespace SampleAPI.Tests
             var expectedBasicUser = new BasicUserViewModel
             {
                 Username = createUserCommand.Username,
+                Name = createUserCommand.Name,
+                LastName = createUserCommand.LastName,   
+                Photo=createUserCommand.Photo,
                 Email = createUserCommand.Email,
                 IsActive = true
             };
