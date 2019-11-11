@@ -10,7 +10,7 @@ namespace SampleAPI.Queries
     {
         Task<List<Course>> FindAllAsync();
 
-        //Task<List<Course>> FindAllByCategoryIdAsync(int CategoryId);
+        Task<List<Course>> GetAllByCategoryIdAsync(int CategoryId);
 
         Task<Course> FindByIdAsync(int id);
     }

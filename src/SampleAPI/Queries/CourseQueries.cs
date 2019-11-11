@@ -27,10 +27,10 @@ namespace SampleAPI.Queries
             return await _context.Courses.AsNoTracking().FirstOrDefaultAsync(course => course.Id == id);
         }
 
-        //public async Task<List<Course>> FindAllByCategoryIdAsync(int CategoryId)
-        //{
-        //    return await _context.Courses.AsNoTracking().Where(course => course.CategoryId == CategoryId).ToListAsync();
-        //}
+        public async Task<List<Course>> GetAllByCategoryIdAsync(int categoryid)
+        {
+            return await _context.Courses.AsNoTracking().Where(course => course.CategoryId == categoryid).ToListAsync();
+        }
 
     }
 }
