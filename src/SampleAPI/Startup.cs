@@ -53,6 +53,12 @@ namespace SampleAPI
             services.AddScoped<ICategoryQueries, CategoryQuerys>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+            /// Course
+
+            services.AddScoped<ICourseQueries, CourseQuerys>();
+            services.AddScoped<ICourseBehavior, CourseBehavior>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
+
 
             // Add Automapper
             services.AddAutoMapper();

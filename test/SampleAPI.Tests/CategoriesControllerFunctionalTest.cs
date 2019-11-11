@@ -16,6 +16,18 @@ namespace SampleAPI.Tests
     public class CategoriesControllerFunctionalTest : WebTest
     {
         [Fact]
+        public async Task Get_ReturnsSeededList()
+        {
+            // Execute
+            var response = await _client.GetAsync(Endpoints.CATEGORIES);
+            var content = await response.Content.ReadAsStringAsync();
+
+            // Check
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(SeedExtensions.CategoriesSeed.Serialize(), content);
+        }
+
+        [Fact]
         public async Task Create_ReturnsCategory()
         {
             // Prepare

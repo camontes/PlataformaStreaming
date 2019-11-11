@@ -6,31 +6,33 @@ using SampleAPI.Domain;
 
 namespace SampleAPI.Infrastructure.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CourseRepository : ICourseRepository
     {
         protected readonly ApplicationDbContext _context;
 
-        public CategoryRepository(ApplicationDbContext context)
+        public CourseRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task CreateCategoryAsync(Category category)
+
+        public async Task CreateCourseAsync(Course course)
         {
-            _context.Categories.Add(category);
+            _context.Courses.Add(course);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateCategoryAsync(Category category)
+        public async Task UpdateCourseAsync(Course course)
         {
-            _context.Categories.Update(category);
+            _context.Courses.Update(course);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteCategoryAsync(Category category)
+        public async Task DeleteCourseAsync(Course course)
         {
-            _context.Categories.Remove(category);
+            _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
         }
     }
 }
+

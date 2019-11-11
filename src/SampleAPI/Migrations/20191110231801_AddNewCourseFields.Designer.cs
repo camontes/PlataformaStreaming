@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SampleAPI.Infrastructure;
 
 namespace SampleAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191110231801_AddNewCourseFields")]
+    partial class AddNewCourseFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,11 +45,11 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2019, 11, 10, 18, 43, 10, 387, DateTimeKind.Local).AddTicks(1967),
+                            CreatedAt = new DateTime(2019, 11, 10, 18, 17, 59, 988, DateTimeKind.Local).AddTicks(9439),
                             Description = "En esta categoria encontrarás cursos de Blender y Unreal",
                             IsActive = true,
                             Name = "Video Juegos",
-                            UpdatedAt = new DateTime(2019, 11, 10, 18, 43, 10, 387, DateTimeKind.Local).AddTicks(2949)
+                            UpdatedAt = new DateTime(2019, 11, 10, 18, 17, 59, 989, DateTimeKind.Local).AddTicks(668)
                         });
                 });
 
@@ -57,7 +59,7 @@ namespace SampleAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId");
+                    b.Property<int>("CourseId");
 
                     b.Property<DateTime?>("CreatedAt");
 
@@ -71,7 +73,7 @@ namespace SampleAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Courses");
 
@@ -79,12 +81,12 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2019, 11, 10, 18, 43, 10, 388, DateTimeKind.Local).AddTicks(1639),
+                            CourseId = 1,
+                            CreatedAt = new DateTime(2019, 11, 10, 18, 17, 59, 989, DateTimeKind.Local).AddTicks(6938),
                             Description = "En esta categoria encontrarás temas de Blender",
                             IsActive = true,
                             Name = "Blender",
-                            UpdatedAt = new DateTime(2019, 11, 10, 18, 43, 10, 388, DateTimeKind.Local).AddTicks(7479)
+                            UpdatedAt = new DateTime(2019, 11, 10, 18, 17, 59, 989, DateTimeKind.Local).AddTicks(8022)
                         });
                 });
 
@@ -115,13 +117,13 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Username = "Mr. Sample",
-                            CreatedAt = new DateTime(2019, 11, 10, 18, 43, 10, 383, DateTimeKind.Local).AddTicks(4175),
+                            CreatedAt = new DateTime(2019, 11, 10, 18, 17, 59, 985, DateTimeKind.Local).AddTicks(3338),
                             Email = "sample@email.com",
                             IsActive = true,
                             LastName = "Sample",
                             Name = "Mr.",
                             Photo = "photo.png",
-                            UpdatedAt = new DateTime(2019, 11, 10, 18, 43, 10, 386, DateTimeKind.Local).AddTicks(5350)
+                            UpdatedAt = new DateTime(2019, 11, 10, 18, 17, 59, 988, DateTimeKind.Local).AddTicks(2693)
                         });
                 });
 
@@ -129,7 +131,7 @@ namespace SampleAPI.Migrations
                 {
                     b.HasOne("SampleAPI.Domain.Category", "Category")
                         .WithMany("Courses")
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

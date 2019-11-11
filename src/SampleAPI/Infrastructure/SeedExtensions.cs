@@ -31,8 +31,19 @@ namespace SampleAPI.Infrastructure
                 IsActive=true,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
+            }
+        };
 
-
+        public static readonly Course[] CoursesSeed = new Course[] {
+            new Course
+            {
+                Id=1,
+                Name="Blender",
+                Description="En esta categoria encontrarás temas de Blender",
+                IsActive=true,
+                CategoryId=1,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
             }
         };
 
@@ -43,6 +54,9 @@ namespace SampleAPI.Infrastructure
             );
             modelBuilder.Entity<Category>().HasData(
                CategoriesSeed
+            );
+            modelBuilder.Entity<Course>().HasData(
+               CoursesSeed
             );
         }
     }
