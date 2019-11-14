@@ -12,6 +12,7 @@ namespace SampleAPI.Mappings
             CreateMap<CreateCourseCommand, Course>();
             CreateMap<UpdateCourseCommand, Course>();
             CreateMap<Course, BasicCourseViewModel>();
+            CreateMap<CourseViewModel, Course>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SampleAPI.Domain;
+using SampleAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ namespace SampleAPI.Queries
 {
     public interface ICourseQueries
     {
-        Task<List<Course>> FindAllAsync();
+        Task<List<CourseViewModel>> FindAllAsync();
 
-        Task<List<Course>> GetAllByCategoryIdAsync(int CategoryId);
+        Task<List<CourseViewModel>> GetAllByCategoryIdAsync(int CategoryId);
 
-        Task<Course> FindByIdAsync(int id);
+        Task<CourseViewModel> FindByIdAsync(int id);
     }
 }

@@ -8,6 +8,7 @@ using SampleAPI.Domain.Managers;
 using SampleAPI.Queries;
 using SampleAPI.ViewModels;
 
+
 namespace SampleAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -29,7 +30,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<IEnumerable<Course>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
         }
@@ -37,7 +38,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Course>> GetByIdAsync(int id)
+        public async Task<ActionResult<CourseViewModel>> GetByIdAsync(int id)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
             if (existingCourse == null)
@@ -47,11 +48,11 @@ namespace SampleAPI.Controllers
             return existingCourse;
         }
 
-        [Route("GetAllByCategoryIdAsync/{CategoryId}")]
+        [Route("ByCategory/{CategoryId}")]
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<IEnumerable<Course>>> GetAllByCategoryIdAsync(int CategoryId)
+        public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAllByCategoryIdAsync(int CategoryId)
         {
             return await _queries.GetAllByCategoryIdAsync(CategoryId);
         }
@@ -80,8 +81,9 @@ namespace SampleAPI.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(updateCourseCommand, existingCourse);
-            await _behavior.UpdateCourseAsync(existingCourse);
+            Course courseUpdated = _mapper.Map<Course>(existingCourse);
+            _mapper.Map(updateCourseCommand, courseUpdated);
+            await _behavior.UpdateCourseAsync(courseUpdated);
             return NoContent();
         }
 
@@ -96,7 +98,8 @@ namespace SampleAPI.Controllers
                 return NotFound();
             }
 
-            await _behavior.DeleteCourseAsync(existingCourse);
+            Course courseUpdated = _mapper.Map<Course>(existingCourse);
+            await _behavior.DeleteCourseAsync(courseUpdated);
             return NoContent();
         }
     }
