@@ -54,23 +54,41 @@ namespace SampleAPI.Queries
                 .FirstOrDefaultAsync(usercourse => usercourse.Id == id);
         }
 
-        //public async Task<List<CourseViewModel>> GetAllByCategoryIdAsync(int categoryid)
-        //{
-        //    return await _context.Courses.AsNoTracking()
-        //        .Include(c => c.Category)
-        //        .Select(c => new CourseViewModel
-        //        {
-        //            Id = c.Id,
-        //            Name = c.Name,
-        //            Description = c.Description,
-        //            IsActive = c.IsActive,
-        //            CategoryId = c.CategoryId,
-        //            CategoryName = c.Category.Name,
-        //            CreatedAt = c.CreatedAt,
-        //            UpdatedAt = c.UpdatedAt
-        //        })
-        //        .Where(course => course.CategoryId == categoryid).ToListAsync();
-        //}
+        public async Task<List<UserCourseViewModel>> FindAllByUsernameAsync(string username)
+        {
+            return await _context.UsersCourses.AsNoTracking()
+                .Include(c => c.Course)
+                .Include(c => c.User)
+                .Select(c => new UserCourseViewModel
+                {
+                    Id = c.Id,
+                    CourseId = c.CourseId,
+                    CourseName = c.Course.Name,
+                    Username = c.Username,
+                    IsEnd = c.IsEnd,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                })
+                .Where(user => user.Username == username).ToListAsync();
+        }
+
+        public async Task<List<UserCourseViewModel>> FindAllByCourseIdAsync(int courseid)
+        {
+            return await _context.UsersCourses.AsNoTracking()
+                .Include(c => c.Course)
+                .Include(c => c.User)
+                .Select(c => new UserCourseViewModel
+                {
+                    Id = c.Id,
+                    CourseId = c.CourseId,
+                    CourseName = c.Course.Name,
+                    Username = c.Username,
+                    IsEnd = c.IsEnd,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                })
+                .Where(course => course.CourseId == courseid).ToListAsync();
+        }
 
     }
 }

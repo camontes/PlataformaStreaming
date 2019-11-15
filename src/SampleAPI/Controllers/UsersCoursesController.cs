@@ -47,5 +47,23 @@ namespace SampleAPI.Controllers
             }
             return existingUserCourse;
         }
+
+        [Route("ByUser/{Username}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<UserCourseViewModel>>> GetAllByUsernameAsync(string Username)
+        {
+            return await _queries.FindAllByUsernameAsync(Username);
+        }
+
+        [Route("ByCourse/{CourseId}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<UserCourseViewModel>>> GetAllByCourseIdAsync(int CourseId)
+        {
+            return await _queries.FindAllByCourseIdAsync(CourseId);
+        }
     }
 }
