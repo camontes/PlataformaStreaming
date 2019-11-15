@@ -29,7 +29,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<UserViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
         }
@@ -37,7 +37,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{username}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<User>> GetByUsernameAsync(string username)
+        public async Task<ActionResult<UserViewModel>> GetByUsernameAsync(string username)
         {
             var existingUser = await _queries.FindByUsernameAsync(username);
             if (existingUser == null)
@@ -50,8 +50,15 @@ namespace SampleAPI.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(409)]
         public async Task<ActionResult<User>> CreateUserAsync(CreateUserCommand createUserCommand)
         {
+            var existingUser = await _queries.FindByUsernameAsync(createUserCommand.Username);
+            if (existingUser != null)
+            {
+                return Conflict();
+            }
+
             var user = _mapper.Map<User>(createUserCommand);
             await _behavior.CreateUserAsync(user);
             return CreatedAtAction(
@@ -65,14 +72,16 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> UpdateUserAsync(string username, UpdateUserCommand updateUserCommand)
         {
+
             var existingUser = await _queries.FindByUsernameAsync(username);
             if (existingUser == null)
             {
                 return NotFound();
             }
 
-            _mapper.Map(updateUserCommand, existingUser);
-            await _behavior.UpdateUserAsync(existingUser);
+            User userUpdated = _mapper.Map<User>(existingUser);
+            _mapper.Map(updateUserCommand, userUpdated);
+            await _behavior.UpdateUserAsync(userUpdated);
             return NoContent();
         }
 
@@ -87,7 +96,9 @@ namespace SampleAPI.Controllers
                 return NotFound();
             }
 
-            await _behavior.DeleteUserAsync(existingUser);
+
+            User userDeleted = _mapper.Map<User>(existingUser);
+            await _behavior.DeleteUserAsync(userDeleted);
             return NoContent();
         }
     }

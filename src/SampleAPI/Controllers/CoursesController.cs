@@ -67,7 +67,7 @@ namespace SampleAPI.Controllers
             return CreatedAtAction(
                 nameof(GetByIdAsync),
                 new { id = course.Id },
-                _mapper.Map<BasicCourseViewModel>(course));
+                _mapper.Map<CourseViewModel>(course));
         }
 
         [HttpPut("{id}")]
@@ -98,8 +98,8 @@ namespace SampleAPI.Controllers
                 return NotFound();
             }
 
-            Course courseDelete = _mapper.Map<Course>(existingCourse);
-            await _behavior.DeleteCourseAsync(courseDelete);
+            Course courseDeleted = _mapper.Map<Course>(existingCourse);
+            await _behavior.DeleteCourseAsync(courseDeleted);
             return NoContent();
         }
     }

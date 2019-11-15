@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SampleAPI.Domain;
 using SampleAPI.Infrastructure;
+using SampleAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,38 @@ namespace SampleAPI.Queries
             _context = context;
         }
 
-        public async Task<List<User>> FindAllAsync()
+        public async Task<List<UserViewModel>> FindAllAsync()
         {
-            return await _context.Users.AsNoTracking().ToListAsync();
+            return await _context.Users.AsNoTracking()
+                .Select(c => new UserViewModel
+                {
+                   Username=c.Username,
+                   Name=c.Name,
+                   LastName=c.LastName,
+                   Photo=c.Photo,
+                   Email=c.Email,
+                   IsActive=c.IsActive,
+                   CreatedAt=c.CreatedAt,
+                   UpdatedAt=c.UpdatedAt
+                })
+                .ToListAsync();
         }
 
-        public async Task<User> FindByUsernameAsync(string username)
+        public async Task<UserViewModel> FindByUsernameAsync(string username)
         {
-            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Username == username);
+            return await _context.Users.AsNoTracking()
+                 .Select(c => new UserViewModel
+                 {
+                     Username = c.Username,
+                     Name = c.Name,
+                     LastName = c.LastName,
+                     Photo = c.Photo,
+                     Email = c.Email,
+                     IsActive = c.IsActive,
+                     CreatedAt = c.CreatedAt,
+                     UpdatedAt = c.UpdatedAt
+                 })
+                .FirstOrDefaultAsync(user => user.Username == username);
         }
 
     }
