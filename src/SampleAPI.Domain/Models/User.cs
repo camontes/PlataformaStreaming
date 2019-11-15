@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SampleAPI.Domain.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SampleAPI.Domain
@@ -17,6 +19,8 @@ namespace SampleAPI.Domain
         public string Email { get; set; }
 
         public bool IsActive { get; set; }
+
+        public virtual IEnumerable<UserCourse> UserCourse { get; set; }
 
         public DateTime? CreatedAt { get;  set; }
 

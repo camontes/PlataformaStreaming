@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SampleAPI.Domain;
+using SampleAPI.Domain.Models;
 
 namespace SampleAPI.Infrastructure
 {
@@ -12,6 +13,8 @@ namespace SampleAPI.Infrastructure
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Course> Courses { get; set; }
+
+        public DbSet<UserCourse> UsersCourses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

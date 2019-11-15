@@ -98,8 +98,8 @@ namespace SampleAPI.Controllers
                 return NotFound();
             }
 
-            Course courseUpdated = _mapper.Map<Course>(existingCourse);
-            await _behavior.DeleteCourseAsync(courseUpdated);
+            Course courseDelete = _mapper.Map<Course>(existingCourse);
+            await _behavior.DeleteCourseAsync(courseDelete);
             return NoContent();
         }
     }

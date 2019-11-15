@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SampleAPI.Infrastructure;
 
 namespace SampleAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191115025405_UsersCourses Relation")]
+    partial class UsersCoursesRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,11 +45,11 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2019, 11, 14, 22, 1, 15, 515, DateTimeKind.Local).AddTicks(6040),
+                            CreatedAt = new DateTime(2019, 11, 14, 21, 54, 4, 242, DateTimeKind.Local).AddTicks(6098),
                             Description = "En esta categoria encontrarás cursos de Blender y Unreal",
                             IsActive = true,
                             Name = "Video Juegos",
-                            UpdatedAt = new DateTime(2019, 11, 14, 22, 1, 15, 515, DateTimeKind.Local).AddTicks(6816)
+                            UpdatedAt = new DateTime(2019, 11, 14, 21, 54, 4, 242, DateTimeKind.Local).AddTicks(7331)
                         });
                 });
 
@@ -80,11 +82,11 @@ namespace SampleAPI.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2019, 11, 14, 22, 1, 15, 516, DateTimeKind.Local).AddTicks(3014),
+                            CreatedAt = new DateTime(2019, 11, 14, 21, 54, 4, 243, DateTimeKind.Local).AddTicks(4099),
                             Description = "En esta categoria encontrarás temas de Blender",
                             IsActive = true,
                             Name = "Blender",
-                            UpdatedAt = new DateTime(2019, 11, 14, 22, 1, 15, 516, DateTimeKind.Local).AddTicks(3946)
+                            UpdatedAt = new DateTime(2019, 11, 14, 21, 54, 4, 243, DateTimeKind.Local).AddTicks(8842)
                         });
                 });
 
@@ -113,18 +115,6 @@ namespace SampleAPI.Migrations
                     b.HasIndex("Username");
 
                     b.ToTable("UsersCourses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CourseId = 1,
-                            CreatedAt = new DateTime(2019, 11, 14, 22, 1, 15, 516, DateTimeKind.Local).AddTicks(8976),
-                            IsEnd = false,
-                            Rating = 0f,
-                            UpdatedAt = new DateTime(2019, 11, 14, 22, 1, 15, 517, DateTimeKind.Local).AddTicks(285),
-                            Username = "Mr. Sample"
-                        });
                 });
 
             modelBuilder.Entity("SampleAPI.Domain.User", b =>
@@ -154,13 +144,13 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Username = "Mr. Sample",
-                            CreatedAt = new DateTime(2019, 11, 14, 22, 1, 15, 512, DateTimeKind.Local).AddTicks(7729),
+                            CreatedAt = new DateTime(2019, 11, 14, 21, 54, 4, 239, DateTimeKind.Local).AddTicks(4358),
                             Email = "sample@email.com",
                             IsActive = true,
                             LastName = "Sample",
                             Name = "Mr.",
                             Photo = "photo.png",
-                            UpdatedAt = new DateTime(2019, 11, 14, 22, 1, 15, 515, DateTimeKind.Local).AddTicks(1277)
+                            UpdatedAt = new DateTime(2019, 11, 14, 21, 54, 4, 241, DateTimeKind.Local).AddTicks(6819)
                         });
                 });
 

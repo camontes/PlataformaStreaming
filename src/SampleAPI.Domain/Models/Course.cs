@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SampleAPI.Domain.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,6 +21,8 @@ namespace SampleAPI.Domain
 
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
+
+        public virtual IEnumerable<UserCourse> UserCourse { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 
