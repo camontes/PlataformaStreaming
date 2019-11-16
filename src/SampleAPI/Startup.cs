@@ -12,8 +12,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SampleAPI.Domain.Behaviors;
 using SampleAPI.Domain.Infrastructure.Repositories;
 using SampleAPI.Domain.Managers;
+using SampleAPI.Domain.Repositories;
 using SampleAPI.Infrastructure;
 using SampleAPI.Infrastructure.Repositories;
 using SampleAPI.Queries;
@@ -66,6 +68,8 @@ namespace SampleAPI
             // UserCourse
 
             services.AddScoped<IUserCourseQueries, UserCourseQuerys>();
+            services.AddScoped<IUserCourseBehavior, UserCourseBehavior>();
+            services.AddScoped<IUserCourseRepository, UserCourseRepository>();
 
 
             // Add Automapper

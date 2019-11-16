@@ -8,8 +8,7 @@ namespace SampleAPI.Commands
 {
     public class UpdateUserCourseCommand
     {
-        public bool IsEnd { get; set; }
-
+        [Required]
         public float Rating { get; set; }
     }
 }

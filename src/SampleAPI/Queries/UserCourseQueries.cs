@@ -30,6 +30,7 @@ namespace SampleAPI.Queries
                     CourseName = c.Course.Name,
                     Username = c.Username,
                     IsEnd = c.IsEnd,
+                    Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -48,6 +49,7 @@ namespace SampleAPI.Queries
                     CourseName = c.Course.Name,
                     Username = c.Username,
                     IsEnd = c.IsEnd,
+                    Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -66,6 +68,7 @@ namespace SampleAPI.Queries
                     CourseName = c.Course.Name,
                     Username = c.Username,
                     IsEnd = c.IsEnd,
+                    Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -84,10 +87,30 @@ namespace SampleAPI.Queries
                     CourseName = c.Course.Name,
                     Username = c.Username,
                     IsEnd = c.IsEnd,
+                    Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
                 .Where(course => course.CourseId == courseid).ToListAsync();
+        }
+
+        public async Task<UserCourseViewModel> FindExistUserCourseAsync(string username, int courseid)
+        {
+            return await _context.UsersCourses.AsNoTracking()
+                .Include(c => c.Course)
+                .Include(c => c.User)
+                .Select(c => new UserCourseViewModel
+                {
+                    Id = c.Id,
+                    CourseId = c.CourseId,
+                    CourseName = c.Course.Name,
+                    Username = c.Username,
+                    IsEnd = c.IsEnd,
+                    Rating = c.Rating,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                })
+                .FirstOrDefaultAsync(c => c.Username == username && c.CourseId == courseid);
         }
 
     }
