@@ -54,21 +54,23 @@ namespace SampleAPI.Queries
                 .FirstOrDefaultAsync(subject => subject.Id == id);
         }
 
-        //public async task<list<courseviewmodel>> getallbycategoryidasync(int categoryid)
-        //{
-        //    return await _context.courses.asnotracking()
-        //        .include(c => c.category)
-        //        .select(c => new courseviewmodel
-        //        {
-        //            id = c.id,
-        //            name = c.name,
-        //            description = c.description,
-        //            isactive = c.isactive,
-        //            categoryid = c.categoryid,
-        //            categoryname = c.category.name,
-        //            createdat = c.createdat,
-        //            updatedat = c.updatedat
-        //        })
-        //        .where(course => course.categoryid == categoryid).tolistasync();
+        public async Task<List<SubjectViewModel>> GetAllByCourseIdAsync(int courseId)
+        {
+            return await _context.Subjects.AsNoTracking()
+                .Include(c => c.Course)
+                .Select(c => new SubjectViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    IsActive = c.IsActive,
+                    CourseId = c.CourseId,
+                    CourseName = c.Course.Name,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                })
+                .Where(subject => subject.CourseId == courseId).ToListAsync();
+        }
+
     }
 }

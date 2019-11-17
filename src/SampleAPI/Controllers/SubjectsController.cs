@@ -46,14 +46,14 @@ namespace SampleAPI.Controllers
             return existingSubject;
         }
 
-        //[Route("ByCategory/{CategoryId}")]
-        //[HttpGet]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(404)]
-        //public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAllByCategoryIdAsync(int CategoryId)
-        //{
-        //    return await _queries.GetAllByCategoryIdAsync(CategoryId);
-        //}
+        [Route("ByCourse/{courseId}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<SubjectViewModel>>> GetAllByCourseIdAsync(int courseId)
+        {
+            return await _queries.GetAllByCourseIdAsync(courseId);
+        }
 
         //[HttpPost]
         //[ProducesResponseType(201)]

@@ -11,7 +11,7 @@ namespace SampleAPI.Queries
     {
         Task<List<SubjectViewModel>> FindAllAsync();
 
-        //Task<List<CourseViewModel>> GetAllByCourseIdAsync(int CategoryId);
+        Task<List<SubjectViewModel>> GetAllByCourseIdAsync(int courseId);
 
         Task<SubjectViewModel> FindByIdAsync(int id);
     }
