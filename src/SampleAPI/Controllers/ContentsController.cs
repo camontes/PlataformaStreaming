@@ -47,5 +47,14 @@ namespace SampleAPI.Controllers
             }
             return existingContent;
         }
+
+        [Route("BySubject/{SubjectId}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<ContentViewModel>>> GetAllBySubjectIdAsync(int SubjectId)
+        {
+            return await _queries.GetAllBySubjectIdAsync(SubjectId);
+        }
     }
 }

@@ -71,13 +71,13 @@ namespace SampleAPI
             services.AddScoped<IUserCourseBehavior, UserCourseBehavior>();
             services.AddScoped<IUserCourseRepository, UserCourseRepository>();
 
-            //Subjects
+            // Subjects
 
             services.AddScoped<ISubjectQueries, SubjectQuerys>();
             //services.AddScoped<IUserCourseBehavior, UserCourseBehavior>();
             //services.AddScoped<IUserCourseRepository, UserCourseRepository>();
 
-            //Contents
+            // Contents
 
             services.AddScoped<IContentQueries, ContentQuerys>();
 
