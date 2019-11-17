@@ -16,6 +16,10 @@ namespace SampleAPI.Infrastructure
 
         public DbSet<UserCourse> UsersCourses { get; set; }
 
+        public DbSet<Subject> Subjects { get; set; }
+
+        public DbSet<Content> Contents { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();

@@ -61,6 +61,18 @@ namespace SampleAPI.Infrastructure
             }
         };
 
+        public static readonly Subject[] SubjectsSeed = new Subject[] {
+            new Subject
+            {
+               Name="Tema1 Blender",
+               Description="Descripcion Tema1 Blender",
+               IsActive=true,
+               CourseId=1,
+               CreatedAt = DateTime.Now,
+               UpdatedAt = DateTime.Now
+            }
+        };
+
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
