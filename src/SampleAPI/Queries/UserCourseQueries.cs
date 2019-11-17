@@ -23,6 +23,7 @@ namespace SampleAPI.Queries
             return await _context.UsersCourses.AsNoTracking()
                 .Include(c => c.Course)
                 .Include(c => c.User)
+                .Include(c => c.User)
                 .Select(c => new UserCourseViewModel
                 {
                     Id = c.Id,
@@ -31,6 +32,8 @@ namespace SampleAPI.Queries
                     Username = c.Username,
                     IsEnd = c.IsEnd,
                     Rating = c.Rating,
+                    Description = c.Course.Description,
+                    CategoryName = c.Course.Category.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -50,6 +53,8 @@ namespace SampleAPI.Queries
                     Username = c.Username,
                     IsEnd = c.IsEnd,
                     Rating = c.Rating,
+                    Description = c.Course.Description,
+                    CategoryName = c.Course.Category.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -69,6 +74,8 @@ namespace SampleAPI.Queries
                     Username = c.Username,
                     IsEnd = c.IsEnd,
                     Rating = c.Rating,
+                    Description = c.Course.Description,
+                    CategoryName = c.Course.Category.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -88,6 +95,8 @@ namespace SampleAPI.Queries
                     Username = c.Username,
                     IsEnd = c.IsEnd,
                     Rating = c.Rating,
+                    Description = c.Course.Description,
+                    CategoryName = c.Course.Category.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -107,6 +116,8 @@ namespace SampleAPI.Queries
                     Username = c.Username,
                     IsEnd = c.IsEnd,
                     Rating = c.Rating,
+                    Description = c.Course.Description,
+                    CategoryName = c.Course.Category.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
