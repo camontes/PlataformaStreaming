@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SampleAPI.Commands
+namespace SampleAPI.ViewModels
 {
-    public class UpdateContentCommand
+    public class BasicContentViewModel
     {
         public string Name { get; set; }
 
@@ -14,7 +13,8 @@ namespace SampleAPI.Commands
 
         public string Url { get; set; }
 
-        [Required]
+        public int SubjetcId { get; set; }
+
         public bool IsActive { get; set; }
     }
 }
