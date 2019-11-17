@@ -64,6 +64,7 @@ namespace SampleAPI.Infrastructure
         public static readonly Subject[] SubjectsSeed = new Subject[] {
             new Subject
             {
+               Id=1,
                Name="Tema1 Blender",
                Description="Descripcion Tema1 Blender",
                IsActive=true,
@@ -73,6 +74,19 @@ namespace SampleAPI.Infrastructure
             }
         };
 
+        public static readonly Content[] ContentsSeed = new Content[] {
+            new Content
+            {
+               Id=1,
+               Name="Contenido Tema1",
+               Description="Descripcion Contenido Tema1",
+               Url="www.google.com",
+               IsActive=true,
+               SubjectId=1,
+               CreatedAt = DateTime.Now,
+               UpdatedAt = DateTime.Now
+            }
+        };
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
@@ -88,6 +102,14 @@ namespace SampleAPI.Infrastructure
             modelBuilder.Entity<UserCourse>().HasData(
                UsersCoursesSeed
             );
+
+            modelBuilder.Entity<Subject>().HasData(
+              SubjectsSeed
+           );
+
+            modelBuilder.Entity<Content>().HasData(
+              ContentsSeed
+           );
         }
     }
 }
