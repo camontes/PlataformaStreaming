@@ -71,6 +71,10 @@ namespace SampleAPI
             services.AddScoped<IUserCourseBehavior, UserCourseBehavior>();
             services.AddScoped<IUserCourseRepository, UserCourseRepository>();
 
+            // Content
+
+            services.AddScoped<IContentQueries, ContentQuerys>();
+
 
             // Add Automapper
             services.AddAutoMapper();
