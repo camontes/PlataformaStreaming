@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace SampleAPI.Commands
 {
-    public class CreateCourseCommand
+    public class UpdateContentCommand
     {
-        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
 
         [Required]
-        public int CourseId { get; set; }
+        public bool IsActive { get; set; }
     }
 }
