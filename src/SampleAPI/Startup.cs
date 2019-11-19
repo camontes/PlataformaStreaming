@@ -74,8 +74,8 @@ namespace SampleAPI
             // Subjects
 
             services.AddScoped<ISubjectQueries, SubjectQuerys>();
-            //services.AddScoped<IUserCourseBehavior, UserCourseBehavior>();
-            //services.AddScoped<IUserCourseRepository, UserCourseRepository>();
+            services.AddScoped<ISubjectBehavior, SubjectBehavior>();
+            services.AddScoped<ISubjectRepository, SubjectRepository>();
 
             // Contents
 

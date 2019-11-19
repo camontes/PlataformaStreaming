@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using SampleAPI.Commands;
+using SampleAPI.Domain.Managers;
+using SampleAPI.Domain.Models;
 using SampleAPI.Queries;
 using SampleAPI.ViewModels;
 
@@ -13,15 +16,15 @@ namespace SampleAPI.Controllers
     [ApiController]
     public class SubjectsController : ControllerBase
     {
-        //private readonly ISubBehavior _behavior;
+        private readonly ISubjectBehavior _behavior;
 
         private readonly ISubjectQueries _queries;
 
         private readonly IMapper _mapper;
 
-        public SubjectsController(ISubjectQueries queries, IMapper mapper)
+        public SubjectsController(ISubjectBehavior behavior, ISubjectQueries queries, IMapper mapper)
         {
-            //_behavior = behavior;
+            _behavior = behavior;
             _queries = queries;
             _mapper = mapper;
         }
@@ -55,50 +58,51 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllByCourseIdAsync(courseId);
         }
 
-        //[HttpPost]
-        //[ProducesResponseType(201)]
-        //[ProducesResponseType(400)]
-        //public async Task<ActionResult<Course>> CreateCourseAsync(CreateCourseCommand createCourseCommand)
-        //{
-        //    var course = _mapper.Map<Course>(createCourseCommand);
-        //    await _behavior.CreateCourseAsync(course);
-        //    return CreatedAtAction(
-        //        nameof(GetByIdAsync),
-        //        new { id = course.Id },
-        //        _mapper.Map<CourseViewModel>(course));
-        //}
+        [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<Subject>> CreateSubjectAsync(CreateSubjectCommand createSubjectCommand)
+        {
+            var subject = _mapper.Map<Subject>(createSubjectCommand);
 
-        //[HttpPut("{id}")]
-        //[ProducesResponseType(204)]
-        //[ProducesResponseType(404)]
-        //public async Task<IActionResult> UpdateCourseAsync(int id, UpdateCourseCommand updateCourseCommand)
-        //{
-        //    var existingCourse = await _queries.FindByIdAsync(id);
-        //    if (existingCourse == null)
-        //    {
-        //        return NotFound();
-        //    }
+            await _behavior.CreateSubjectAsync(subject);
+            return CreatedAtAction(
+                nameof(GetByIdAsync),
+                new { id = subject.Id },
+                _mapper.Map<BasicSubjectViewModel>(subject));
+        }
 
-        //    Course courseUpdated = _mapper.Map<Course>(existingCourse);
-        //    _mapper.Map(updateCourseCommand, courseUpdated);
-        //    await _behavior.UpdateCourseAsync(courseUpdated);
-        //    return NoContent();
-        //}
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateSubjectAsync(int id, UpdateSubjectCommand updateSubjectCommand)
+        {
+            var existingSubject = await _queries.FindByIdAsync(id);
+            if (existingSubject == null)
+            {
+                return NotFound();
+            }
 
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType(204)]
-        //[ProducesResponseType(404)]
-        //public async Task<IActionResult> DeleteCourseAsync(int id)
-        //{
-        //    var existingCourse = await _queries.FindByIdAsync(id);
-        //    if (existingCourse == null)
-        //    {
-        //        return NotFound();
-        //    }
+            Subject subjectUpdated = _mapper.Map<Subject>(existingSubject);
+            _mapper.Map(updateSubjectCommand, subjectUpdated);
+            await _behavior.UpdateSubjectAsync(subjectUpdated);
+            return NoContent();
+        }
 
-        //    Course courseDeleted = _mapper.Map<Course>(existingCourse);
-        //    await _behavior.DeleteCourseAsync(courseDeleted);
-        //    return NoContent();
-        //}
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteSubjectAsync(int id)
+        {
+            var existingSubject = await _queries.FindByIdAsync(id);
+            if (existingSubject == null)
+            {
+                return NotFound();
+            }
+
+            Subject subjectDeleted = _mapper.Map<Subject>(existingSubject);
+            await _behavior.DeleteSubjectAsync(subjectDeleted);
+            return NoContent();
+        }
     }
 }
