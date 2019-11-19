@@ -67,7 +67,7 @@ namespace SampleAPI.Controllers
             return CreatedAtAction(
                 nameof(GetByIdAsync),
                 new { id = course.Id },
-                _mapper.Map<CourseViewModel>(course));
+                _mapper.Map<BasicCourseViewModel>(course));
         }
 
         [HttpPut("{id}")]

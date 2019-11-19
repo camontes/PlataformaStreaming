@@ -80,6 +80,8 @@ namespace SampleAPI
             // Contents
 
             services.AddScoped<IContentQueries, ContentQuerys>();
+            services.AddScoped<IContentBehavior, ContentBehavior>();
+            services.AddScoped<IContentRepository, ContentRepository>();
 
             // Add Automapper
             services.AddAutoMapper();

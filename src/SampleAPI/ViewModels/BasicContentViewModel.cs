@@ -13,7 +13,7 @@ namespace SampleAPI.ViewModels
 
         public string Url { get; set; }
 
-        public int SubjetcId { get; set; }
+        public int SubjectId { get; set; }
 
         public bool IsActive { get; set; }
     }
