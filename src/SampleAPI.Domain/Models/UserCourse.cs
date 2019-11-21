@@ -21,7 +21,7 @@ namespace SampleAPI.Domain.Models
 
         public bool IsEnd { get; set; }
 
-        public float Rating { get; set; }
+        public int Rating { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 

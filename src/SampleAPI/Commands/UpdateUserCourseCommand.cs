@@ -9,6 +9,6 @@ namespace SampleAPI.Commands
     public class UpdateUserCourseCommand
     {
         [Required]
-        public float Rating { get; set; }
+        public int Rating { get; set; }
     }
 }

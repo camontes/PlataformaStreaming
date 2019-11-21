@@ -43,6 +43,7 @@ namespace SampleAPI.Infrastructure
                 Description="En esta categoria encontrarás temas de Blender",
                 IsActive=true,
                 CategoryId=1,
+                Rating=0,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             }

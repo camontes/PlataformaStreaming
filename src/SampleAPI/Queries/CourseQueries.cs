@@ -30,6 +30,7 @@ namespace SampleAPI.Queries
                     IsActive = c.IsActive,
                     CategoryId = c.CategoryId,
                     CategoryName = c.Category.Name,
+                    Rating=c.Rating,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -47,6 +48,7 @@ namespace SampleAPI.Queries
                     Description = c.Description,
                     IsActive = c.IsActive,
                     CategoryId = c.CategoryId,
+                    Rating = c.Rating,
                     CategoryName = c.Category.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
@@ -65,6 +67,7 @@ namespace SampleAPI.Queries
                     Description = c.Description,
                     IsActive = c.IsActive,
                     CategoryId = c.CategoryId,
+                    Rating = c.Rating,
                     CategoryName = c.Category.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt

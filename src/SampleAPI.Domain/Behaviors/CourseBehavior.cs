@@ -22,6 +22,7 @@ namespace SampleAPI.Domain.Managers
             course.IsActive = true;
             course.CreatedAt = DateTime.Now;
             course.UpdatedAt = DateTime.Now;
+            course.Rating = 0;
             await _repository.CreateCourseAsync(course);
         }
 

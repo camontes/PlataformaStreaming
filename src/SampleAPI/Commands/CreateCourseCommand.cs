@@ -14,6 +14,6 @@ namespace SampleAPI.Commands
         public string Description { get; set; }
 
         [Required]
-        public int CourseId { get; set; }
+        public int CategoryId { get; set; }
     }
 }

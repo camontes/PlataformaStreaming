@@ -11,6 +11,8 @@ namespace SampleAPI.ViewModels
 
         public string Description { get; set; }
 
+        public double Rating { get; set; }
+
         public int CategoryId { get; set; }
 
         public bool IsActive { get; set; }

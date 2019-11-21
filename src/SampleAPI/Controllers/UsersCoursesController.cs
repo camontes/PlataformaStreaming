@@ -98,10 +98,12 @@ namespace SampleAPI.Controllers
         {
 
             var existingUserCourse = await _queries.FindByIdAsync(id);
+
             if (existingUserCourse == null)
             {
                 return NotFound();
             }
+            
 
             UserCourse userCourseUpdated = _mapper.Map<UserCourse>(existingUserCourse);
             _mapper.Map(updateUserCourseCommand, userCourseUpdated);
