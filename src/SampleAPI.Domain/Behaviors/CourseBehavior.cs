@@ -34,6 +34,15 @@ namespace SampleAPI.Domain.Managers
             await _repository.UpdateCourseAsync(course);
         }
 
+        public async Task UpdateRatingCourseAsync(Course course, double averageCourse)
+        {
+            if (course is null) throw new ArgumentNullException(nameof(course));
+
+            course.UpdatedAt = DateTime.Now;
+            course.Rating = averageCourse;
+            await _repository.UpdateCourseAsync(course);
+        }
+
         public async Task DeleteCourseAsync(Course course)
         {
             if (course is null) throw new ArgumentNullException(nameof(course));

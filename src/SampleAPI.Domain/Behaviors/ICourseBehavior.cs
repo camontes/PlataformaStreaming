@@ -9,6 +9,7 @@ namespace SampleAPI.Domain.Managers
         Task CreateCourseAsync(Course course);
         Task DeleteCourseAsync(Course course);
         Task UpdateCourseAsync(Course course);
+        Task UpdateRatingCourseAsync(Course course, double averageCourse);
     }
 }
 

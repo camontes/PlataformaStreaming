@@ -19,15 +19,21 @@ namespace SampleAPI.Controllers
     {
         private readonly IUserCourseBehavior _behavior;
 
+        private readonly ICourseBehavior _courseBehavior;
+
         private readonly IUserCourseQueries _queries;
+
+        private readonly ICourseQueries _courseQueries;
 
         private readonly IMapper _mapper;
 
-        public UsersCoursesController(IUserCourseBehavior behavior, IUserCourseQueries queries, IMapper mapper)
+        public UsersCoursesController(IUserCourseBehavior behavior, ICourseBehavior courseBehavior, IUserCourseQueries queries, ICourseQueries courseQueries, IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
             _mapper = mapper;
+            _courseQueries = courseQueries;
+            _courseBehavior = courseBehavior;
         }
 
         [HttpGet]
@@ -103,11 +109,24 @@ namespace SampleAPI.Controllers
             {
                 return NotFound();
             }
-            
+
+            var courseId = existingUserCourse.CourseId;
+            var existingCourse = await _courseQueries.FindByIdAsync(courseId);
+
+            if (existingCourse == null)
+            {
+                return NotFound();
+            }
+
 
             UserCourse userCourseUpdated = _mapper.Map<UserCourse>(existingUserCourse);
             _mapper.Map(updateUserCourseCommand, userCourseUpdated);
             await _behavior.UpdateRatingUserCourseAsync(userCourseUpdated);
+
+            var averageCourse = await _queries.AverageCourseAsync(courseId);
+            Course courseUpdated = _mapper.Map<Course>(existingCourse);
+            await _courseBehavior.UpdateRatingCourseAsync(courseUpdated, averageCourse);
+
             return NoContent();
         }
 

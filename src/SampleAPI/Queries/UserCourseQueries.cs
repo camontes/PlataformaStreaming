@@ -124,5 +124,12 @@ namespace SampleAPI.Queries
                 .FirstOrDefaultAsync(c => c.Username == username && c.CourseId == courseid);
         }
 
+        public async Task<double> AverageCourseAsync(int courseid)
+        {
+            return await _context.UsersCourses.AsNoTracking()
+                .Where(course => course.CourseId == courseid)
+                .AverageAsync(c => c.Rating);
+        }
+
     }
 }

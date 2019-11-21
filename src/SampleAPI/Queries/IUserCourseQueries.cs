@@ -18,5 +18,7 @@ namespace SampleAPI.Queries
         Task<UserCourseViewModel> FindByIdAsync(int id);
 
         Task<UserCourseViewModel> FindExistUserCourseAsync(string username, int courseid);
+
+        Task<double> AverageCourseAsync(int courseid);
     }
 }
