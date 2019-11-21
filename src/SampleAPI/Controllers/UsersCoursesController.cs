@@ -23,17 +23,20 @@ namespace SampleAPI.Controllers
 
         private readonly IUserCourseQueries _queries;
 
+        private readonly IUserQueries _userQueries;
+
         private readonly ICourseQueries _courseQueries;
 
         private readonly IMapper _mapper;
 
-        public UsersCoursesController(IUserCourseBehavior behavior, ICourseBehavior courseBehavior, IUserCourseQueries queries, ICourseQueries courseQueries, IMapper mapper)
+        public UsersCoursesController(IUserCourseBehavior behavior, ICourseBehavior courseBehavior, IUserCourseQueries queries, ICourseQueries courseQueries, IUserQueries userQueries,   IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
             _mapper = mapper;
             _courseQueries = courseQueries;
             _courseBehavior = courseBehavior;
+            _userQueries = userQueries;
         }
 
         [HttpGet]
@@ -76,12 +79,21 @@ namespace SampleAPI.Controllers
 
         [HttpPost]
         [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
         public async Task<ActionResult<User>> CreateUserCourseAsync(CreateUserCourseCommand createUserCourseCommand)
         {
             var username = createUserCourseCommand.Username;
             var courseId = createUserCourseCommand.CourseId;
+
+            var existingUser = await _userQueries.FindByUsernameAsync(username);
+            var existingCourse = await _courseQueries.FindByIdAsync(courseId);
+
+            if (existingUser == null || existingCourse == null)
+            {
+                return NotFound();
+            }
 
             var existingRegister = await _queries.FindExistUserCourseAsync(username, courseId);
             if (existingRegister != null)
