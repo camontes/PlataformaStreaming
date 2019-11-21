@@ -20,13 +20,16 @@ namespace SampleAPI.Controllers
 
         private readonly IContentQueries _queries;
 
+        private readonly ISubjectQueries _subjectQueries;
+
         private readonly IMapper _mapper;
 
-        public ContentsController(IContentBehavior behavior, IContentQueries queries, IMapper mapper)
+        public ContentsController(IContentBehavior behavior, IContentQueries queries, ISubjectQueries subjectQueries, IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
             _mapper = mapper;
+            _subjectQueries = subjectQueries;
         }
 
         [HttpGet]
@@ -61,8 +64,17 @@ namespace SampleAPI.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<Content>> CreateContentAsync(CreateContentCommand createContentCommand)
         {
+            var subjectId = createContentCommand.SubjectId;
+            var existingSubject = await _subjectQueries.FindByIdAsync(subjectId);
+
+            if (existingSubject == null)
+            {
+                return NotFound();
+            }
+
             var content = _mapper.Map<Content>(createContentCommand);
             await _behavior.CreateContentAsync(content);
             return CreatedAtAction(

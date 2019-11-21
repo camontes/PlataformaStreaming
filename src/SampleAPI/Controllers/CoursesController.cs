@@ -19,12 +19,15 @@ namespace SampleAPI.Controllers
 
         private readonly ICourseQueries _queries;
 
+        private readonly ICategoryQueries _categoryQueries;
+
         private readonly IMapper _mapper;
 
-        public CoursesController(ICourseBehavior behavior, ICourseQueries queries, IMapper mapper)
+        public CoursesController(ICourseBehavior behavior, ICourseQueries queries, ICategoryQueries categoryQueries, IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
+            _categoryQueries = categoryQueries;
             _mapper = mapper;
         }
 
@@ -60,8 +63,17 @@ namespace SampleAPI.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<Course>> CreateCourseAsync(CreateCourseCommand createCourseCommand)
         {
+            var categoryId = createCourseCommand.CategoryId;
+            var existingCategory = await _categoryQueries.FindByIdAsync(categoryId);
+
+            if (existingCategory == null)
+            {
+                return NotFound();
+            }
+
             var course = _mapper.Map<Course>(createCourseCommand);
             await _behavior.CreateCourseAsync(course);
             return CreatedAtAction(
