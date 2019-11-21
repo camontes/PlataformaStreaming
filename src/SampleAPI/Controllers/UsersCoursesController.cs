@@ -21,13 +21,19 @@ namespace SampleAPI.Controllers
 
         private readonly IUserCourseQueries _queries;
 
+        private readonly IUserQueries _userQueries;
+
+        private readonly ICourseQueries _courseQueries;
+
         private readonly IMapper _mapper;
 
-        public UsersCoursesController(IUserCourseBehavior behavior, IUserCourseQueries queries, IMapper mapper)
+        public UsersCoursesController(IUserCourseBehavior behavior, IUserCourseQueries queries, IUserQueries userQueries, ICourseQueries courseQueries, IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
             _mapper = mapper;
+            _userQueries = userQueries;
+            _courseQueries = courseQueries;
         }
 
         [HttpGet]
@@ -71,11 +77,20 @@ namespace SampleAPI.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(409)]
         public async Task<ActionResult<User>> CreateUserCourseAsync(CreateUserCourseCommand createUserCourseCommand)
         {
             var username = createUserCourseCommand.Username;
             var courseId = createUserCourseCommand.CourseId;
+
+            var existingUsername = await _userQueries.FindByUsernameAsync(username);
+            var existingCourse = await _courseQueries.FindByIdAsync(courseId);
+
+            if (existingUsername == null || existingCourse == null)
+            {
+                return NotFound();
+            }
 
             var existingRegister = await _queries.FindExistUserCourseAsync(username, courseId);
             if (existingRegister != null)
@@ -104,7 +119,6 @@ namespace SampleAPI.Controllers
                 return NotFound();
             }
             
-
             UserCourse userCourseUpdated = _mapper.Map<UserCourse>(existingUserCourse);
             _mapper.Map(updateUserCourseCommand, userCourseUpdated);
             await _behavior.UpdateRatingUserCourseAsync(userCourseUpdated);

@@ -20,13 +20,16 @@ namespace SampleAPI.Controllers
 
         private readonly ISubjectQueries _queries;
 
+        private readonly ICourseQueries _courseQueries;
+
         private readonly IMapper _mapper;
 
-        public SubjectsController(ISubjectBehavior behavior, ISubjectQueries queries, IMapper mapper)
+        public SubjectsController(ISubjectBehavior behavior, ISubjectQueries queries, ICourseQueries courseQueries, IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
             _mapper = mapper;
+            _courseQueries = courseQueries;
         }
 
         [HttpGet]
@@ -63,8 +66,15 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult<Subject>> CreateSubjectAsync(CreateSubjectCommand createSubjectCommand)
         {
-            var subject = _mapper.Map<Subject>(createSubjectCommand);
+            var courseId = createSubjectCommand.CourseId;
+            var existingCourse = await _courseQueries.FindByIdAsync(courseId);
 
+            if (existingCourse == null)
+            {
+                return NotFound();
+            }
+
+            var subject = _mapper.Map<Subject>(createSubjectCommand);
             await _behavior.CreateSubjectAsync(subject);
             return CreatedAtAction(
                 nameof(GetByIdAsync),
