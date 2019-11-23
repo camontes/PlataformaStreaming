@@ -82,7 +82,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
-        public async Task<ActionResult<User>> CreateUserCourseAsync(CreateUserCourseCommand createUserCourseCommand)
+        public async Task<ActionResult<UserCourse>> CreateUserCourseAsync(CreateUserCourseCommand createUserCourseCommand)
         {
             var username = createUserCourseCommand.Username;
             var courseId = createUserCourseCommand.CourseId;

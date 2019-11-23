@@ -105,7 +105,7 @@ namespace SampleAPI.Infrastructure
             new Option
             {
                Id=1,
-               Content="Pregunta Curso 1",
+               Content="Respuesta Pregunta 1",
                IsActive=true,
                QuestionId=1,
                IsCorrect=true,

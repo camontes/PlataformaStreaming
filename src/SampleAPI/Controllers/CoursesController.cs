@@ -74,7 +74,7 @@ namespace SampleAPI.Controllers
                 return NotFound();
             }
 
-            var course = _mapper.Map<Course>(createCourseCommand);
+            Course course = _mapper.Map<Course>(createCourseCommand);
             await _behavior.CreateCourseAsync(course);
             return CreatedAtAction(
                 nameof(GetByIdAsync),

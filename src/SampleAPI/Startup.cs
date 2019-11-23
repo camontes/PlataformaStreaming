@@ -83,6 +83,18 @@ namespace SampleAPI
             services.AddScoped<IContentBehavior, ContentBehavior>();
             services.AddScoped<IContentRepository, ContentRepository>();
 
+            // Options
+
+            services.AddScoped<IOptionQueries, OptionQuerys>();
+            services.AddScoped<IOptionBehavior, OptionBehavior>();
+            services.AddScoped<IOptionRepository, OptionRepository>();
+
+            // Questions
+
+            services.AddScoped<IQuestionQueries, QuestionQuerys>();
+            services.AddScoped<IQuestionBehavior, QuestionBehavior>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+
             // Add Automapper
             services.AddAutoMapper();
 
