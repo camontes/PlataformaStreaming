@@ -20,6 +20,10 @@ namespace SampleAPI.Infrastructure
 
         public DbSet<Content> Contents { get; set; }
 
+        public DbSet<Question> Questions { get; set; }
+
+        public DbSet<Option> Options { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();

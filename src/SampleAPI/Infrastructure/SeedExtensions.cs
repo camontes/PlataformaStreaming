@@ -88,6 +88,31 @@ namespace SampleAPI.Infrastructure
                UpdatedAt = DateTime.Now
             }
         };
+
+        public static readonly Question[] QuestionsSeed = new Question[] {
+            new Question
+            {
+               Id=1,
+               Content="Pregunta Curso 1",
+               IsActive=true,
+               CourseId=1,
+               CreatedAt = DateTime.Now,
+               UpdatedAt = DateTime.Now
+            }
+        };
+
+        public static readonly Option[] OptionsSeed = new Option[] {
+            new Option
+            {
+               Id=1,
+               Content="Pregunta Curso 1",
+               IsActive=true,
+               QuestionId=1,
+               IsCorrect=true,
+               CreatedAt = DateTime.Now,
+               UpdatedAt = DateTime.Now
+            }
+        };
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
@@ -110,6 +135,14 @@ namespace SampleAPI.Infrastructure
 
             modelBuilder.Entity<Content>().HasData(
               ContentsSeed
+           );
+
+            modelBuilder.Entity<Question>().HasData(
+              QuestionsSeed
+           );
+
+            modelBuilder.Entity<Option>().HasData(
+              OptionsSeed
            );
         }
     }

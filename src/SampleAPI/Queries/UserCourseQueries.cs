@@ -127,7 +127,7 @@ namespace SampleAPI.Queries
         public async Task<double> AverageCourseAsync(int courseid)
         {
             return await _context.UsersCourses.AsNoTracking()
-                .Where(course => course.CourseId == courseid)
+                .Where(course => course.CourseId == courseid && course.Rating != 0)
                 .AverageAsync(c => c.Rating);
         }
 

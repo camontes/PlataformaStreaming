@@ -24,6 +24,8 @@ namespace SampleAPI.Domain
 
         public virtual IEnumerable<UserCourse> UserCourse { get; set; }
 
+        public virtual IEnumerable<Question> Question { get; set; }
+
         public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
