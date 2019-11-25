@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
+using SampleAPI.Domain.Behaviors;
 using SampleAPI.Domain.Managers;
 using SampleAPI.Domain.Models;
 using SampleAPI.Queries;
@@ -18,9 +20,13 @@ namespace SampleAPI.Controllers
     {
         private readonly IContentBehavior _behavior;
 
+        private readonly IUserCourseBehavior _userCourseBehavior;
+
         private readonly IUserContentBehavior _userContentBehavior;
 
         private readonly IContentQueries _queries;
+
+        private readonly IUserCourseQueries _userCourseQueries;
 
         private readonly IUserContentQueries _userContentQueries;
 
@@ -30,15 +36,17 @@ namespace SampleAPI.Controllers
 
         private readonly IMapper _mapper;
 
-        public ContentsController(IContentBehavior behavior, IContentQueries queries, IUserQueries userQueries, ISubjectQueries subjectQueries, IUserContentBehavior userContentBehavior, IUserContentQueries userContentQueries, IMapper mapper)
+        public ContentsController(IContentBehavior behavior, IContentQueries queries, IUserQueries userQueries, ISubjectQueries subjectQueries, IUserContentBehavior userContentBehavior, IUserCourseBehavior userCourseBehavior, IUserContentQueries userContentQueries, IUserCourseQueries userCourseQueries,  IMapper mapper)
         {
             _behavior = behavior;
             _userContentBehavior = userContentBehavior;
+            _userCourseBehavior = userCourseBehavior;
             _queries = queries;
             _mapper = mapper;
             _subjectQueries = subjectQueries;
             _userQueries = userQueries;
             _userContentQueries = userContentQueries;
+            _userCourseQueries = userCourseQueries;
         }
 
         [HttpGet]
@@ -90,8 +98,31 @@ namespace SampleAPI.Controllers
       
             await _userContentBehavior.CreateUserContentAsync(usercontent);
 
-            var countUserContents = await _userContentQueries.CountByContentAsync(existingContent.CourseId, username);
-            var countContents = await _queries.CountByCourseIdAsync(existingContent.CourseId);
+            var courseId = existingContent.CourseId;
+
+            var countUserContents = await _userContentQueries.CountByContentAsync(courseId, username);
+            var countContents = await _queries.CountByCourseIdAsync(courseId);
+
+            UserCourseViewModel userCourseViewModel = await _userCourseQueries.FindExistUserCourseAsync(username, courseId);
+
+            if(userCourseViewModel == null)
+            {
+                return NotFound();
+            }
+
+            var userCourse = _mapper.Map<UserCourse>(userCourseViewModel);
+
+            double progressDecimal = (double)((double)countUserContents / (double)countContents) * 100.00;
+            var progress = Math.Ceiling(progressDecimal);
+
+            if (progress == 100)
+            {
+                userCourse.IsEnd = true;
+            }
+            userCourse.Progress = (int)progress;
+
+
+            await _userCourseBehavior.UpdateProgressUserCourseAsync(userCourse);
 
             return existingContent;
         }

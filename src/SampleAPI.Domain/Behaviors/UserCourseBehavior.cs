@@ -38,6 +38,15 @@ namespace SampleAPI.Domain.Behaviors
             await _repository.UpdateRatingUserCourseAsync(userCourse);
         }
 
+        public async Task UpdateProgressUserCourseAsync(UserCourse userCourse)
+        {
+            if (userCourse is null) throw new ArgumentNullException(nameof(userCourse));
+
+            userCourse.UpdatedAt = DateTime.Now;
+
+            await _repository.UpdateRatingUserCourseAsync(userCourse);
+        }
+
         public async Task DeleteUserCourseAsync(UserCourse userCourse)
         {
             if (userCourse is null) throw new ArgumentNullException(nameof(userCourse));

@@ -29,6 +29,12 @@ namespace SampleAPI.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateProgressUserCourseAsync(UserCourse usercourse)
+        {
+            _context.UsersCourses.Update(usercourse);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteUserCourseAsync(UserCourse usercourse)
         {
             _context.UsersCourses.Remove(usercourse);

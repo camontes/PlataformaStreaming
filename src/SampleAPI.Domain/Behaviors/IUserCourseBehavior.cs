@@ -9,5 +9,7 @@ namespace SampleAPI.Domain.Behaviors
         Task CreateUserCourseAsync(UserCourse userCourse);
         Task DeleteUserCourseAsync(UserCourse userCourse);
         Task UpdateRatingUserCourseAsync(UserCourse userCourse);
+
+        Task UpdateProgressUserCourseAsync(UserCourse Usercourse);
     }
 }
