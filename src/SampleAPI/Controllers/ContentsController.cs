@@ -112,17 +112,7 @@ namespace SampleAPI.Controllers
 
             var userCourse = _mapper.Map<UserCourse>(userCourseViewModel);
 
-            double progressDecimal = (double)((double)countUserContents / (double)countContents) * 100.00;
-            var progress = Math.Ceiling(progressDecimal);
-
-            if (progress == 100)
-            {
-                userCourse.IsEnd = true;
-            }
-            userCourse.Progress = (int)progress;
-
-
-            await _userCourseBehavior.UpdateProgressUserCourseAsync(userCourse);
+            await _userCourseBehavior.UpdateProgressUserCourseAsync(userCourse, countUserContents, countContents);
 
             return existingContent;
         }
