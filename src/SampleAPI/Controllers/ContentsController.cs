@@ -18,18 +18,27 @@ namespace SampleAPI.Controllers
     {
         private readonly IContentBehavior _behavior;
 
+        private readonly IUserContentBehavior _userContentBehavior;
+
         private readonly IContentQueries _queries;
+
+        private readonly IUserContentQueries _userContentQueries;
+
+        private readonly IUserQueries _userQueries;
 
         private readonly ISubjectQueries _subjectQueries;
 
         private readonly IMapper _mapper;
 
-        public ContentsController(IContentBehavior behavior, IContentQueries queries, ISubjectQueries subjectQueries, IMapper mapper)
+        public ContentsController(IContentBehavior behavior, IContentQueries queries, IUserQueries userQueries, ISubjectQueries subjectQueries, IUserContentBehavior userContentBehavior, IUserContentQueries userContentQueries, IMapper mapper)
         {
             _behavior = behavior;
+            _userContentBehavior = userContentBehavior;
             _queries = queries;
             _mapper = mapper;
             _subjectQueries = subjectQueries;
+            _userQueries = userQueries;
+            _userContentQueries = userContentQueries;
         }
 
         [HttpGet]
@@ -49,6 +58,41 @@ namespace SampleAPI.Controllers
             {
                 return NotFound();
             }
+            return existingContent;
+        }
+
+        [Route("GetReadContent/{username}/{id}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(409)]
+        public async Task<ActionResult<ContentViewModel>> GetReadContentAsync(string username, int id)
+        {
+            var existingUser = await _userQueries.FindByUsernameAsync(username);
+            var existingContent = await _queries.FindByIdAsync(id);
+           
+            if (existingContent == null || existingUser == null)
+            {
+                return NotFound();
+            }
+
+            var existingUserContent = await _userContentQueries.FindUserContentAsync(id, username);
+            if (existingUserContent != null)
+            {
+                return existingContent;
+            }
+
+            UserContent usercontent = new UserContent
+            { 
+                Username=username,
+                ContentId=id
+            };
+      
+            await _userContentBehavior.CreateUserContentAsync(usercontent);
+
+            var countUserContents = await _userContentQueries.CountByContentAsync(existingContent.CourseId, username);
+            var countContents = await _queries.CountByCourseIdAsync(existingContent.CourseId);
+
             return existingContent;
         }
 

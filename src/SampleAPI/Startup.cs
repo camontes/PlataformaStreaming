@@ -95,6 +95,11 @@ namespace SampleAPI
             services.AddScoped<IQuestionBehavior, QuestionBehavior>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
 
+            // UserContents
+            services.AddScoped<IUserContentQueries, UserContentQueries>();
+            services.AddScoped<IUserContentBehavior, UserContentBehavior>();
+            services.AddScoped<IUserContentRepository, UserContentRepository>();
+
             // Add Automapper
             services.AddAutoMapper();
 

@@ -24,6 +24,7 @@ namespace SampleAPI.Domain.Behaviors
             userCourse.UpdatedAt = DateTime.Now;
             userCourse.IsEnd = false;
             userCourse.Rating = 0;
+            userCourse.Progress = 0;
 
             await _repository.CreateUserCourseAsync(userCourse);
         }

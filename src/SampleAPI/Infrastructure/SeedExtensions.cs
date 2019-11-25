@@ -57,6 +57,7 @@ namespace SampleAPI.Infrastructure
                 Username="Mr. Sample",
                 IsEnd=false,
                 Rating=0,
+                Progress=0,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             }
@@ -113,6 +114,16 @@ namespace SampleAPI.Infrastructure
                UpdatedAt = DateTime.Now
             }
         };
+
+        public static readonly UserContent[] UserContentsSeed = new UserContent[] {
+            new UserContent
+            {
+               Id=1,
+               Username="Mr. Sample",
+               ContentId=1,
+               CreatedAt = DateTime.Now,
+            }
+        };
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
@@ -143,6 +154,10 @@ namespace SampleAPI.Infrastructure
 
             modelBuilder.Entity<Option>().HasData(
               OptionsSeed
+           );
+
+            modelBuilder.Entity<UserContent>().HasData(
+              UserContentsSeed
            );
         }
     }

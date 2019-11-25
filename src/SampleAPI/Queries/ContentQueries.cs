@@ -30,6 +30,7 @@ namespace SampleAPI.Queries
                     Url = c.Url,
                     IsActive = c.IsActive,
                     SubjectId = c.SubjectId,
+                    CourseId=c.Subject.CourseId,
                     SubjectName = c.Subject.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
@@ -49,6 +50,7 @@ namespace SampleAPI.Queries
                     Url = c.Url,
                     IsActive = c.IsActive,
                     SubjectId = c.SubjectId,
+                    CourseId = c.Subject.CourseId,
                     SubjectName = c.Subject.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
@@ -68,11 +70,19 @@ namespace SampleAPI.Queries
                     Url = c.Url,
                     IsActive = c.IsActive,
                     SubjectId = c.SubjectId,
+                    CourseId = c.Subject.CourseId,
                     SubjectName = c.Subject.Name,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
                 .Where(content => content.SubjectId == subjectid).ToListAsync();
+        }
+
+        public async Task<int> CountByCourseIdAsync(int courseid)
+        {
+            return await _context.Contents.AsNoTracking()
+                .Where(content => content.Subject.CourseId == courseid)
+                .CountAsync();
         }
 
     }

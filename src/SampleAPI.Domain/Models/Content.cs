@@ -23,6 +23,8 @@ namespace SampleAPI.Domain.Models
         [ForeignKey("SubjectId")]
         public virtual Subject Subject { get; set; }
 
+        public virtual IEnumerable<UserContent> UserContent { get; set; }
+
         public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }

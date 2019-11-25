@@ -24,6 +24,8 @@ namespace SampleAPI.Infrastructure
 
         public DbSet<Option> Options { get; set; }
 
+        public DbSet<UserContent> UserContents { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();
