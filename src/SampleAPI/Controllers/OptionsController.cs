@@ -63,6 +63,7 @@ namespace SampleAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -76,12 +77,30 @@ namespace SampleAPI.Controllers
                 return NotFound();
             }
 
-            Option option = _mapper.Map<Option>(createOptionCommand);
-            await _behavior.CreateOptionAsync(option);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = option.Id },
-                _mapper.Map<BasicOptionViewModel>(option));
+            List<OptionList> options = createOptionCommand.Options;
+            var counter = 0;
+            for (var i = 0; i < options.Count; ++i)
+            {
+                if (options[i].IsCorrect == true) counter++;             
+            }
+
+            if (counter > 1)
+            {
+                return Conflict();
+            }
+
+            for (var i = 0; i < options.Count; ++i)
+            {
+                Option option = new Option
+                {
+                    Content = options[i].Content,
+                    QuestionId = createOptionCommand.QuestionId,
+                    IsCorrect = options[i].IsCorrect
+                };
+                await _behavior.CreateOptionAsync(option);
+            }
+
+            return Ok();
         }
 
         [HttpPut("{id}")]

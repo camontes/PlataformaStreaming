@@ -103,6 +103,8 @@ namespace SampleAPI.Controllers
             var countUserContents = await _userContentQueries.CountByContentAsync(courseId, username);
             var countContents = await _queries.CountByCourseIdAsync(courseId);
 
+            // Chequeamos si la matricula existe
+
             UserCourseViewModel userCourseViewModel = await _userCourseQueries.FindExistUserCourseAsync(username, courseId);
 
             if(userCourseViewModel == null)
