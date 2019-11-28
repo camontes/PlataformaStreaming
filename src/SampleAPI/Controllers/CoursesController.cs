@@ -21,13 +21,16 @@ namespace SampleAPI.Controllers
 
         private readonly ICategoryQueries _categoryQueries;
 
+        private readonly IUserQueries _userQueries;
+
         private readonly IMapper _mapper;
 
-        public CoursesController(ICourseBehavior behavior, ICourseQueries queries, ICategoryQueries categoryQueries, IMapper mapper)
+        public CoursesController(ICourseBehavior behavior, ICourseQueries queries, IUserQueries userQueries, ICategoryQueries categoryQueries, IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
             _categoryQueries = categoryQueries;
+            _userQueries = userQueries;
             _mapper = mapper;
         }
 
@@ -67,9 +70,11 @@ namespace SampleAPI.Controllers
         public async Task<ActionResult<Course>> CreateCourseAsync(CreateCourseCommand createCourseCommand)
         {
             var categoryId = createCourseCommand.CategoryId;
+            var username = createCourseCommand.Username;
             var existingCategory = await _categoryQueries.FindByIdAsync(categoryId);
+            var existingUser = await _userQueries.FindByUsernameAsync(username);
 
-            if (existingCategory == null)
+            if (existingCategory == null || existingUser == null)
             {
                 return NotFound();
             }

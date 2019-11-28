@@ -41,6 +41,7 @@ namespace SampleAPI.Infrastructure
                 Id=1,
                 Name="Blender",
                 Description="En esta categoria encontrarás temas de Blender",
+                Username="Mr. Sample",
                 IsActive=true,
                 CategoryId=1,
                 Rating=0,

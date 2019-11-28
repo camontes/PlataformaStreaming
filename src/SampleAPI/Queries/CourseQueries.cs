@@ -22,12 +22,14 @@ namespace SampleAPI.Queries
         {
             return await _context.Courses.AsNoTracking()
                 .Include(c => c.Category)
+                .Include(c => c.User)
                 .Select(c => new CourseViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
                     IsActive = c.IsActive,
+                    Username = c.User.Username,
                     CategoryId = c.CategoryId,
                     CategoryName = c.Category.Name,
                     Rating=c.Rating,
@@ -41,15 +43,17 @@ namespace SampleAPI.Queries
         {
             return await _context.Courses.AsNoTracking()
                 .Include(c => c.Category)
+                .Include(c => c.User)
                 .Select(c => new CourseViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
                     IsActive = c.IsActive,
+                    Username = c.User.Username,
                     CategoryId = c.CategoryId,
-                    Rating = c.Rating,
                     CategoryName = c.Category.Name,
+                    Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
@@ -60,15 +64,17 @@ namespace SampleAPI.Queries
         {
             return await _context.Courses.AsNoTracking()
                 .Include(c => c.Category)
+                .Include(c => c.User)
                 .Select(c => new CourseViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
                     IsActive = c.IsActive,
+                    Username = c.User.Username,
                     CategoryId = c.CategoryId,
-                    Rating = c.Rating,
                     CategoryName = c.Category.Name,
+                    Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })

@@ -15,6 +15,8 @@ namespace SampleAPI.ViewModels
 
         public bool IsActive { get; set; }
 
+        public string Username { get; set; }
+
         public int CategoryId { get; set; }
 
         public string CategoryName { get; set; }

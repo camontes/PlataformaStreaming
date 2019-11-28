@@ -15,5 +15,8 @@ namespace SampleAPI.Commands
 
         [Required]
         public int CategoryId { get; set; }
+
+        [Required]
+        public string Username { get; set; }
     }
 }

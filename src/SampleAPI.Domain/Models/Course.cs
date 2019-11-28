@@ -17,6 +17,11 @@ namespace SampleAPI.Domain
 
         public bool IsActive { get; set; }
 
+        public string Username { get; set; }
+
+        [ForeignKey("Username")]
+        public virtual User User { get; set; }
+
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
