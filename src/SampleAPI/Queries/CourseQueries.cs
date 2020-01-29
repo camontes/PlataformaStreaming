@@ -34,7 +34,8 @@ namespace SampleAPI.Queries
                     CategoryName = c.Category.Name,
                     Rating=c.Rating,
                     CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.UpdatedAt
+                    UpdatedAt = c.UpdatedAt,
+                    IsPublished = c.IsPublished
                 })
                 .ToListAsync();
         }

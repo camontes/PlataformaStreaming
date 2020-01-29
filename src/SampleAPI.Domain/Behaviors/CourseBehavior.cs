@@ -23,6 +23,7 @@ namespace SampleAPI.Domain.Managers
             course.CreatedAt = DateTime.Now;
             course.UpdatedAt = DateTime.Now;
             course.Rating = 0;
+            course.IsPublished = false;
             await _repository.CreateCourseAsync(course);
         }
 
@@ -32,6 +33,14 @@ namespace SampleAPI.Domain.Managers
 
             course.UpdatedAt = DateTime.Now;
             await _repository.UpdateCourseAsync(course);
+        }
+
+        public async Task UpdatePostCourseAsync(Course course)
+        {
+            if (course is null) throw new ArgumentNullException(nameof(course));
+
+            course.IsPublished = true;
+            await _repository.UpdatePostCourseAsync(course);
         }
 
         public async Task UpdateRatingCourseAsync(Course course, double averageCourse)

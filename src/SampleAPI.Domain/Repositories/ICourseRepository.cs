@@ -9,5 +9,6 @@ namespace SampleAPI.Domain.Infrastructure.Repositories
         Task CreateCourseAsync(Course course);
         Task DeleteCourseAsync(Course course);
         Task UpdateCourseAsync(Course course);
+        Task UpdatePostCourseAsync(Course course);
     }
 }

@@ -46,7 +46,8 @@ namespace SampleAPI.Infrastructure
                 CategoryId=1,
                 Rating=0,
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = DateTime.Now,
+                IsPublished = false
             }
         };
 

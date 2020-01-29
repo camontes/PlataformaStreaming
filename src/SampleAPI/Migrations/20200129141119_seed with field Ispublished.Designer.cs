@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SampleAPI.Infrastructure;
 
 namespace SampleAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200129141119_seed with field Ispublished")]
+    partial class seedwithfieldIspublished
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,11 +45,11 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 446, DateTimeKind.Local).AddTicks(8156),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 436, DateTimeKind.Local).AddTicks(2866),
                             Description = "En esta categoria encontrarás cursos de Blender y Unreal",
                             IsActive = true,
                             Name = "Video Juegos",
-                            UpdatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 446, DateTimeKind.Local).AddTicks(9115)
+                            UpdatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 436, DateTimeKind.Local).AddTicks(3696)
                         });
                 });
 
@@ -88,13 +90,13 @@ namespace SampleAPI.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 447, DateTimeKind.Local).AddTicks(6256),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 436, DateTimeKind.Local).AddTicks(9676),
                             Description = "En esta categoria encontrarás temas de Blender",
                             IsActive = true,
                             IsPublished = false,
                             Name = "Blender",
                             Rating = 0.0,
-                            UpdatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 447, DateTimeKind.Local).AddTicks(7165),
+                            UpdatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 437, DateTimeKind.Local).AddTicks(755),
                             Username = "Mr. Sample"
                         });
                 });
@@ -129,12 +131,12 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 451, DateTimeKind.Local).AddTicks(5009),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 438, DateTimeKind.Local).AddTicks(8166),
                             Description = "Descripcion Contenido Tema1",
                             IsActive = true,
                             Name = "Contenido Tema1",
                             SubjectId = 1,
-                            UpdatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 451, DateTimeKind.Local).AddTicks(6558),
+                            UpdatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 438, DateTimeKind.Local).AddTicks(8898),
                             Url = "www.google.com"
                         });
                 });
@@ -168,11 +170,11 @@ namespace SampleAPI.Migrations
                         {
                             Id = 1,
                             Content = "Respuesta Pregunta 1",
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 452, DateTimeKind.Local).AddTicks(7589),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 439, DateTimeKind.Local).AddTicks(8701),
                             IsActive = true,
                             IsCorrect = true,
                             QuestionId = 1,
-                            UpdatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 452, DateTimeKind.Local).AddTicks(8468)
+                            UpdatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 439, DateTimeKind.Local).AddTicks(9886)
                         });
                 });
 
@@ -204,9 +206,9 @@ namespace SampleAPI.Migrations
                             Id = 1,
                             Content = "Pregunta Curso 1",
                             CourseId = 1,
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 452, DateTimeKind.Local).AddTicks(1351),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 439, DateTimeKind.Local).AddTicks(2757),
                             IsActive = true,
-                            UpdatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 452, DateTimeKind.Local).AddTicks(2205)
+                            UpdatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 439, DateTimeKind.Local).AddTicks(3477)
                         });
                 });
 
@@ -239,11 +241,11 @@ namespace SampleAPI.Migrations
                         {
                             Id = 1,
                             CourseId = 1,
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 450, DateTimeKind.Local).AddTicks(5467),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 438, DateTimeKind.Local).AddTicks(2218),
                             Description = "Descripcion Tema1 Blender",
                             IsActive = true,
                             Name = "Tema1 Blender",
-                            UpdatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 450, DateTimeKind.Local).AddTicks(6610)
+                            UpdatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 438, DateTimeKind.Local).AddTicks(3036)
                         });
                 });
 
@@ -272,7 +274,7 @@ namespace SampleAPI.Migrations
                         {
                             Id = 1,
                             ContentId = 1,
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 453, DateTimeKind.Local).AddTicks(2317),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 440, DateTimeKind.Local).AddTicks(4850),
                             Username = "Mr. Sample"
                         });
                 });
@@ -310,11 +312,11 @@ namespace SampleAPI.Migrations
                         {
                             Id = 1,
                             CourseId = 1,
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 449, DateTimeKind.Local).AddTicks(6583),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 437, DateTimeKind.Local).AddTicks(6954),
                             IsEnd = false,
                             Progress = 0,
                             Rating = 0,
-                            UpdatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 449, DateTimeKind.Local).AddTicks(8057),
+                            UpdatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 437, DateTimeKind.Local).AddTicks(7694),
                             Username = "Mr. Sample"
                         });
                 });
@@ -346,13 +348,13 @@ namespace SampleAPI.Migrations
                         new
                         {
                             Username = "Mr. Sample",
-                            CreatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 443, DateTimeKind.Local).AddTicks(8094),
+                            CreatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 433, DateTimeKind.Local).AddTicks(8326),
                             Email = "sample@email.com",
                             IsActive = true,
                             LastName = "Sample",
                             Name = "Mr.",
                             Photo = "photo.png",
-                            UpdatedAt = new DateTime(2020, 1, 29, 10, 7, 34, 446, DateTimeKind.Local).AddTicks(2458)
+                            UpdatedAt = new DateTime(2020, 1, 29, 9, 11, 18, 435, DateTimeKind.Local).AddTicks(8381)
                         });
                 });
 
