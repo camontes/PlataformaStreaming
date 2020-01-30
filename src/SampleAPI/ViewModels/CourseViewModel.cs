@@ -17,6 +17,14 @@ namespace SampleAPI.ViewModels
 
         public string Username { get; set; }
 
+        public string NameTeacher{ get; set; }
+
+        public string LastNameTeacher { get; set; }
+
+        public string PhotoTeacher { get; set; }
+
+        public string EmailTeacher { get; set; }
+
         public int CategoryId { get; set; }
 
         public string CategoryName { get; set; }

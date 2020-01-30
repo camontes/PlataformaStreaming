@@ -30,14 +30,18 @@ namespace SampleAPI.Queries
                     Description = c.Description,
                     IsActive = c.IsActive,
                     Username = c.User.Username,
+                    LastNameTeacher = c.User.LastName,
+                    NameTeacher = c.User.Name,
+                    EmailTeacher = c.User.Email,
+                    PhotoTeacher = c.User.Photo,
                     CategoryId = c.CategoryId,
                     CategoryName = c.Category.Name,
-                    Rating=c.Rating,
+                    Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt,
                     IsPublished = c.IsPublished
-                })
-                .ToListAsync();
+                }).Where(course => course.IsPublished == true)
+                   .ToListAsync();
         }
 
         public async Task<CourseViewModel> FindByIdAsync(int id)
