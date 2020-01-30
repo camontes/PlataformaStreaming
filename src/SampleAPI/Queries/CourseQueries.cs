@@ -60,7 +60,8 @@ namespace SampleAPI.Queries
                     CategoryName = c.Category.Name,
                     Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.UpdatedAt
+                    UpdatedAt = c.UpdatedAt,
+                    IsPublished = c.IsPublished
                 })
                 .FirstOrDefaultAsync(course => course.Id == id);
         }
@@ -81,9 +82,10 @@ namespace SampleAPI.Queries
                     CategoryName = c.Category.Name,
                     Rating = c.Rating,
                     CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.UpdatedAt
+                    UpdatedAt = c.UpdatedAt,
+                    IsPublished = c.IsPublished
                 })
-                .Where(course => course.CategoryId == categoryid).ToListAsync();
+                .Where(course => course.CategoryId == categoryid && course.IsPublished == true).ToListAsync();
         }
 
     }
