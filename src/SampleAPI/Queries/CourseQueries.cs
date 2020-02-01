@@ -96,5 +96,31 @@ namespace SampleAPI.Queries
                 .Where(course => course.CategoryId == categoryid && course.IsPublished == true).ToListAsync();
         }
 
+        public async Task<List<CourseViewModel>> GetAllByUsernameAsync(string username)
+        {
+            return await _context.Courses.AsNoTracking()
+                .Include(c => c.Category)
+                .Include(c => c.User)
+                .Select(c => new CourseViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    IsActive = c.IsActive,
+                    Username = c.User.Username,
+                    LastNameTeacher = c.User.LastName,
+                    NameTeacher = c.User.Name,
+                    EmailTeacher = c.User.Email,
+                    PhotoTeacher = c.User.Photo,
+                    CategoryId = c.CategoryId,
+                    CategoryName = c.Category.Name,
+                    Rating = c.Rating,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt,
+                    IsPublished = c.IsPublished
+                })
+                .Where(course => course.Username == username).ToListAsync();
+        }
+
     }
 }

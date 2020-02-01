@@ -21,6 +21,10 @@ namespace SampleAPI.Controllers
 
         private readonly IContentQueries _contentQueries;
 
+        private readonly IQuestionQueries _questionQueries;
+
+        private readonly IOptionQueries _optionQueries;
+
         private readonly ISubjectQueries _subjectQueries;
 
         private readonly ICategoryQueries _categoryQueries;
@@ -35,13 +39,17 @@ namespace SampleAPI.Controllers
                                 ISubjectQueries subjectQueries,
                                 IUserQueries userQueries,
                                 ICategoryQueries categoryQueries,
+                                IOptionQueries optionQueries,
+                                IQuestionQueries questionQueries,
                                 IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
             _contentQueries = contentQueries;
+            _optionQueries = optionQueries;
             _subjectQueries = subjectQueries;
             _categoryQueries = categoryQueries;
+            _questionQueries = questionQueries;
             _userQueries = userQueries;
             _mapper = mapper;
         }
@@ -75,11 +83,20 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllByCategoryIdAsync(CategoryId);
         }
 
+        [Route("ByUsername/{username}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAllByUsernameAsync(string username)
+        {
+            return await _queries.GetAllByUsernameAsync(username);
+        }
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Course>> CreateCourseAsync(CreateCourseCommand createCourseCommand)
+        public async Task<ActionResult<CourseViewModel>> CreateCourseAsync(CreateCourseCommand createCourseCommand)
         {
             var categoryId = createCourseCommand.CategoryId;
             var username = createCourseCommand.Username;
@@ -93,10 +110,10 @@ namespace SampleAPI.Controllers
 
             Course course = _mapper.Map<Course>(createCourseCommand);
             await _behavior.CreateCourseAsync(course);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = course.Id },
-                _mapper.Map<BasicCourseViewModel>(course));
+
+            var createdCourse = await _queries.FindByIdAsync(course.Id);
+            CourseViewModel courseViewModel = _mapper.Map<CourseViewModel>(createdCourse);
+            return courseViewModel;
         }
 
         [HttpPut("{id}")]
@@ -147,8 +164,24 @@ namespace SampleAPI.Controllers
                     return NotFound("no se puede publicar porque hay temas que no contienen contenidos");
                 }
             }
-            
 
+            //validate if exist questions and options of course
+
+            var existingquestions = await _questionQueries.GetAllByCourseIdAsync(id);
+            if (existingquestions.Count == 0)
+            {
+                return NotFound("el curso no tiene preguntas y no se puede publicar");
+            }
+            for (var i = 0; i < existingquestions.Count; i++)
+            {
+                var optionId = existingquestions[i].Id;
+                var existingOptions = await _optionQueries.GetAllByQuestionIdAsync(optionId);
+
+                if (existingOptions.Count <= 1)
+                {
+                    return NotFound("no se puede publicar porque la pregunta no tiene opciones o son menores a dos");
+                }
+            }
             Course courseUpdated = _mapper.Map<Course>(existingCourse);
             await _behavior.UpdatePostCourseAsync(courseUpdated);
             return NoContent();
