@@ -43,7 +43,7 @@ namespace SampleAPI
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000");
+                    builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
                 });
             });
 
@@ -145,6 +145,8 @@ namespace SampleAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "SampleAPI V1");
                 c.RoutePrefix = string.Empty;
             });
+
+
 
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
