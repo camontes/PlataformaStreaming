@@ -117,25 +117,36 @@ namespace SampleAPI.Controllers
             await _behavior.CreateCourseAsync(course);
 
             var createdCourse = await _queries.FindByIdAsync(course.Id);
-            CourseViewModel courseViewModel = _mapper.Map<CourseViewModel>(createdCourse);
-            return courseViewModel;
+            //CourseViewModel courseViewModel = _mapper.Map<CourseViewModel>(createdCourse);
+            return createdCourse;
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateCourseAsync(int id, UpdateCourseCommand updateCourseCommand)
+        public async Task<ActionResult<CourseViewModel>> UpdateCourseAsync(int id, UpdateCourseCommand updateCourseCommand)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
             if (existingCourse == null)
             {
-                return NotFound();
+                return NotFound("el curso no existe");
+            }
+
+            var categoryId = updateCourseCommand.CategoryId;
+            var exisingCategory =await  _categoryQueries.FindByIdAsync(categoryId);
+
+            if(exisingCategory == null)
+            {
+                return NotFound("la categoria no existe");
             }
 
             Course courseUpdated = _mapper.Map<Course>(existingCourse);
             _mapper.Map(updateCourseCommand, courseUpdated);
             await _behavior.UpdateCourseAsync(courseUpdated);
-            return NoContent();
+
+            var courseViewModel = await _queries.FindByIdAsync(courseUpdated.Id);
+
+            return (courseViewModel);
         }
 
         //validar si se puede publicar el curso

@@ -12,7 +12,6 @@ namespace SampleAPI.Commands
 
         public string Description { get; set; }
 
-        [Required]
-        public bool IsActive { get; set; }
+        public int CategoryId { get; set; }
     }
 }
