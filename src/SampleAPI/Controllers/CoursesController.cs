@@ -121,6 +121,7 @@ namespace SampleAPI.Controllers
             return createdCourse;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
