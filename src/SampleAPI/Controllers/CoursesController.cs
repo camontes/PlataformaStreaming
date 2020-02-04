@@ -70,7 +70,7 @@ namespace SampleAPI.Controllers
             var existingCourse = await _queries.FindByIdAsync(id);
             if (existingCourse == null)
             {
-                return NotFound();
+                return NotFound("el curso no existe");
             }
             return existingCourse;
         }
@@ -106,11 +106,16 @@ namespace SampleAPI.Controllers
             var categoryId = createCourseCommand.CategoryId;
             var username = createCourseCommand.Username;
             var existingCategory = await _categoryQueries.FindByIdAsync(categoryId);
+
+            if (existingCategory == null)
+            {
+                return NotFound("No se puede crear el curso porque la categoria no existe");
+            }
             var existingUser = await _userQueries.FindByUsernameAsync(username);
 
-            if (existingCategory == null || existingUser == null)
+            if (existingUser == null)
             {
-                return NotFound();
+                return NotFound("No se puede crear el curso porque el usuario no existe");
             }
 
             Course course = _mapper.Map<Course>(createCourseCommand);
@@ -125,12 +130,18 @@ namespace SampleAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(409)]
         public async Task<ActionResult<CourseViewModel>> UpdateCourseAsync(int id, UpdateCourseCommand updateCourseCommand)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
             if (existingCourse == null)
             {
                 return NotFound("el curso no existe");
+            }
+
+            if (existingCourse.IsPublished)
+            {
+                return Conflict("no se puede actualizar un curso que ya esta publicado");
             }
 
             var categoryId = updateCourseCommand.CategoryId;
@@ -207,12 +218,17 @@ namespace SampleAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(409)]
         public async Task<IActionResult> DeleteCourseAsync(int id)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
             if (existingCourse == null)
             {
-                return NotFound();
+                return NotFound("el curso no existe");
+            }
+            if (existingCourse.IsPublished)
+            {
+                return Conflict("no se puede borrar un curso que ya esta publicado");
             }
 
             Course courseDeleted = _mapper.Map<Course>(existingCourse);
