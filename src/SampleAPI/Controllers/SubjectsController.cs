@@ -58,6 +58,13 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<IEnumerable<SubjectViewModel>>> GetAllByCourseIdAsync(int courseId)
         {
+            var existingCourse = await _courseQueries.FindByIdAsync(courseId);
+
+            if (existingCourse == null)
+            {
+                return NotFound("El curso no existe");
+            }
+
             return await _queries.GetAllByCourseIdAsync(courseId);
         }
 
