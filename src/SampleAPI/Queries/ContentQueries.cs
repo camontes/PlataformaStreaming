@@ -26,7 +26,6 @@ namespace SampleAPI.Queries
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Description = c.Description,
                     Url = c.Url,
                     IsActive = c.IsActive,
                     SubjectId = c.SubjectId,
@@ -46,7 +45,6 @@ namespace SampleAPI.Queries
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Description = c.Description,
                     Url = c.Url,
                     IsActive = c.IsActive,
                     SubjectId = c.SubjectId,
@@ -66,7 +64,6 @@ namespace SampleAPI.Queries
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Description = c.Description,
                     Url = c.Url,
                     IsActive = c.IsActive,
                     SubjectId = c.SubjectId,

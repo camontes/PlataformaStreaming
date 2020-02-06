@@ -70,7 +70,6 @@ namespace SampleAPI.Infrastructure
             {
                Id=1,
                Name="Tema1 Blender",
-               Description="Descripcion Tema1 Blender",
                IsActive=true,
                CourseId=1,
                CreatedAt = DateTime.Now,
@@ -83,7 +82,6 @@ namespace SampleAPI.Infrastructure
             {
                Id=1,
                Name="Contenido Tema1",
-               Description="Descripcion Contenido Tema1",
                Url="www.google.com",
                IsActive=true,
                SubjectId=1,
