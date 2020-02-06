@@ -129,6 +129,7 @@ namespace SampleAPI.Controllers
         [EnableCors("_myAllowSpecificOrigins")]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
         public async Task<ActionResult<CourseViewModel>> UpdateCourseAsync(int id, UpdateCourseCommand updateCourseCommand)
@@ -161,25 +162,30 @@ namespace SampleAPI.Controllers
             return (courseViewModel);
         }
 
+
+        //validate can be posted
         //validar si se puede publicar el curso
-        [Route("PostCourse/{id}")]
-        [HttpPut]
+        [EnableCors("_myAllowSpecificOrigins")]
+        [Route("CourseCanBePosted/{id}")]
+        [HttpGet]
         [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(409)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> PostCourseAsync(int id)
+        public async Task<ActionResult<CourseViewModel>> CourseCanBePostedAsync(int id)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
 
             if (existingCourse == null)
             {
-                return NotFound("curso no encontrado");
+                return NotFound("Curso no encontrado");
             }
 
             var existingSubjects = await _subjectQueries.GetAllByCourseIdAsync(id);
 
             if (existingSubjects.Count == 0)
             {
-                return NotFound("el curso no tiene temas y no se puede publicar");
+                return NoContent();
             }
 
             for (var i = 0; i < existingSubjects.Count; i++)
@@ -189,7 +195,7 @@ namespace SampleAPI.Controllers
 
                 if (existingContents.Count == 0)
                 {
-                    return NotFound("no se puede publicar porque hay temas que no contienen contenidos");
+                    return NoContent();
                 }
             }
 
@@ -198,7 +204,7 @@ namespace SampleAPI.Controllers
             var existingquestions = await _questionQueries.GetAllByCourseIdAsync(id);
             if (existingquestions.Count == 0)
             {
-                return NotFound("el curso no tiene preguntas y no se puede publicar");
+                return NoContent();
             }
             for (var i = 0; i < existingquestions.Count; i++)
             {
@@ -207,12 +213,36 @@ namespace SampleAPI.Controllers
 
                 if (existingOptions.Count <= 1)
                 {
-                    return NotFound("no se puede publicar porque la pregunta no tiene opciones o son menores a dos");
+                    return NoContent();
                 }
             }
+
+            var courseViewModel = await _queries.FindByIdAsync(existingCourse.Id);
+            return (courseViewModel);
+        }
+
+
+        //validar si se puede publicar el curso
+        [Route("PostCourse/{id}")]
+        [HttpPut]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(409)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<CourseViewModel>> PostCourseAsync(int id)
+        {
+            var existingCourse = await _queries.FindByIdAsync(id);
+
+            if (existingCourse == null)
+            {
+                return NotFound("Curso no encontrado");
+            }
+
             Course courseUpdated = _mapper.Map<Course>(existingCourse);
             await _behavior.UpdatePostCourseAsync(courseUpdated);
-            return NoContent();
+
+            var courseViewModel = await _queries.FindByIdAsync(courseUpdated.Id);
+            return (courseViewModel);
         }
 
         [HttpDelete("{id}")]
