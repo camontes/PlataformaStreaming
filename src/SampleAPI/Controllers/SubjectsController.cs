@@ -71,7 +71,7 @@ namespace SampleAPI.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<Subject>> CreateSubjectAsync(CreateSubjectCommand createSubjectCommand)
+        public async Task<ActionResult<SubjectViewModel>> CreateSubjectAsync(CreateSubjectCommand createSubjectCommand)
         {
             var courseId = createSubjectCommand.CourseId;
             var existingCourse = await _courseQueries.FindByIdAsync(courseId);
@@ -83,10 +83,10 @@ namespace SampleAPI.Controllers
 
             var subject = _mapper.Map<Subject>(createSubjectCommand);
             await _behavior.CreateSubjectAsync(subject);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = subject.Id },
-                _mapper.Map<BasicSubjectViewModel>(subject));
+
+            var subjectViewModel = await _queries.FindByIdAsync(subject.Id);
+
+            return (subjectViewModel);
         }
 
         [HttpPut("{id}")]
