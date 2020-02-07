@@ -8,9 +8,7 @@ namespace SampleAPI.Commands
 {
     public class UpdateSubjectCommand
     {
-        public string Name { get; set; }
-
         [Required]
-        public bool IsActive { get; set; }
+        public string Name { get; set; }
     }
 }
