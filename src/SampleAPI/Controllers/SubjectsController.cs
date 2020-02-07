@@ -47,7 +47,7 @@ namespace SampleAPI.Controllers
             var existingSubject = await _queries.FindByIdAsync(id);
             if (existingSubject == null)
             {
-                return NotFound();
+                return NotFound("Tema no hallado");
             }
             return existingSubject;
         }
@@ -114,7 +114,7 @@ namespace SampleAPI.Controllers
             var existingSubject = await _queries.FindByIdAsync(id);
             if (existingSubject == null)
             {
-                return NotFound();
+                return NotFound("el tema no existe");
             }
 
             Subject subjectDeleted = _mapper.Map<Subject>(existingSubject);
