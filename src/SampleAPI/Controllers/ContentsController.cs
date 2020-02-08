@@ -132,22 +132,22 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Content>> CreateContentAsync(CreateContentCommand createContentCommand)
+        public async Task<ActionResult<ContentViewModel>> CreateContentAsync(CreateContentCommand createContentCommand)
         {
             var subjectId = createContentCommand.SubjectId;
             var existingSubject = await _subjectQueries.FindByIdAsync(subjectId);
 
             if (existingSubject == null)
             {
-                return NotFound();
+                return NotFound("El tema no existe");
             }
 
             var content = _mapper.Map<Content>(createContentCommand);
             await _behavior.CreateContentAsync(content);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = content.Id },
-                _mapper.Map<BasicContentViewModel>(content));
+
+            var contentViewModel = await _queries.FindByIdAsync(content.Id);
+
+            return contentViewModel;
         }
 
         [HttpPut("{id}")]
