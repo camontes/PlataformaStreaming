@@ -153,7 +153,7 @@ namespace SampleAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateContentAsync(int id, UpdateContentCommand updateContentCommand)
+        public async Task<ActionResult<ContentViewModel>> UpdateContentAsync(int id, UpdateContentCommand updateContentCommand)
         {
             var existingContent = await _queries.FindByIdAsync(id);
             if (existingContent == null)
@@ -164,7 +164,10 @@ namespace SampleAPI.Controllers
             Content contentUpdated = _mapper.Map<Content>(existingContent);
             _mapper.Map(updateContentCommand, contentUpdated);
             await _behavior.UpdateContentAsync(contentUpdated);
-            return NoContent();
+
+            var contentViewModel = await _queries.FindByIdAsync(contentUpdated.Id);
+
+            return contentViewModel;
         }
 
         [HttpDelete("{id}")]
