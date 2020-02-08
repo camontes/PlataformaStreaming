@@ -178,7 +178,7 @@ namespace SampleAPI.Controllers
             var existingContent = await _queries.FindByIdAsync(id);
             if (existingContent == null)
             {
-                return NotFound();
+                return NotFound("Contenido no encontrado");
             }
 
             Content contentDeleted = _mapper.Map<Content>(existingContent);
