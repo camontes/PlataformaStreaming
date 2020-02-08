@@ -64,7 +64,7 @@ namespace SampleAPI.Controllers
             var existingContent = await _queries.FindByIdAsync(id);
             if (existingContent == null)
             {
-                return NotFound();
+                return NotFound("el contenido no existe");
             }
             return existingContent;
         }
