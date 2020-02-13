@@ -65,7 +65,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Question>> CreateQuestionAsync(CreateQuestionCommand createQuestionCommand)
+        public async Task<ActionResult<QuestionViewModel>> CreateQuestionAsync(CreateQuestionCommand createQuestionCommand)
         {
             var courseId = createQuestionCommand.CourseId;
             var existingCourse = await _courseQueries.FindByIdAsync(courseId);
@@ -77,10 +77,10 @@ namespace SampleAPI.Controllers
 
             Question question = _mapper.Map<Question>(createQuestionCommand);
             await _behavior.CreateQuestionAsync(question);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = question.Id },
-                _mapper.Map<BasicQuestionViewModel>(question));
+
+            var questionViewModel = await _queries.FindByIdAsync(question.Id);
+
+            return (questionViewModel);
         }
 
         [HttpPut("{id}")]
