@@ -86,7 +86,7 @@ namespace SampleAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateQuestionAsync(int id, UpdateQuestionCommand updateQuestionCommand)
+        public async Task<ActionResult<QuestionViewModel>> UpdateQuestionAsync(int id, UpdateQuestionCommand updateQuestionCommand)
         {
             var existingQuestion = await _queries.FindByIdAsync(id);
             if (existingQuestion == null)
@@ -97,7 +97,10 @@ namespace SampleAPI.Controllers
             Question questionUpdated = _mapper.Map<Question>(existingQuestion);
             _mapper.Map(updateQuestionCommand, questionUpdated);
             await _behavior.UpdateQuestionAsync(questionUpdated);
-            return NoContent();
+
+            var questionViewModel = await _queries.FindByIdAsync(questionUpdated.Id);
+
+            return (questionViewModel);
         }
 
         [HttpDelete("{id}")]

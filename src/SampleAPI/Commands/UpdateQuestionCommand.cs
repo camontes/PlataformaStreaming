@@ -11,7 +11,5 @@ namespace SampleAPI.Commands
         [Required]
         public string Content { get; set; }
 
-        [Required]
-        public bool IsActive { get; set; }
     }
 }
