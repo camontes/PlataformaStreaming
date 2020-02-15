@@ -74,6 +74,8 @@ namespace SampleAPI.Queries
                     CourseId = c.CourseId,
                     CourseName = c.Course.Name,
                     Username = c.Username,
+                    NameTeacher = c.Course.User.Name,
+                    LastNameTeacher = c.Course.User.LastName,
                     IsEnd = c.IsEnd,
                     Rating = c.Rating,
                     Progress = c.Progress,
@@ -82,7 +84,7 @@ namespace SampleAPI.Queries
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
-                .Where(user => user.Username == username).ToListAsync();
+                .Where(usercourse => usercourse.Username == username).ToListAsync();
         }
 
         public async Task<List<UserCourseViewModel>> FindAllByCourseIdAsync(int courseid)

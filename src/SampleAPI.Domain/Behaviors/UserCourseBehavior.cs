@@ -52,7 +52,7 @@ namespace SampleAPI.Domain.Behaviors
             userCourse.Progress = (int)progress;
             userCourse.UpdatedAt = DateTime.Now;
 
-            await _repository.UpdateRatingUserCourseAsync(userCourse);
+            await _repository.UpdateProgressUserCourseAsync(userCourse);
         }
 
         public async Task DeleteUserCourseAsync(UserCourse userCourse)

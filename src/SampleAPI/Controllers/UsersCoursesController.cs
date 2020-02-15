@@ -59,7 +59,7 @@ namespace SampleAPI.Controllers
             return existingUserCourse;
         }
 
-        [Route("ByUser/{Username}")]
+        [Route("ByUsername/{Username}")]
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
