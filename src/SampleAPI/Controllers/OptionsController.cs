@@ -48,7 +48,7 @@ namespace SampleAPI.Controllers
             var existingOption = await _queries.FindByIdAsync(id);
             if (existingOption == null)
             {
-                return NotFound();
+                return NotFound("La opcion no existe");
             }
             return existingOption;
         }
@@ -74,7 +74,7 @@ namespace SampleAPI.Controllers
 
             if (existingQuestion == null)
             {
-                return NotFound();
+                return NotFound("La pregunta no existe");
             }
 
             List<OptionList> options = createOptionCommand.Options;
@@ -86,7 +86,7 @@ namespace SampleAPI.Controllers
 
             if (counter > 1)
             {
-                return Conflict();
+                return Conflict("Solo se admite una pregunta verdadera");
             }
 
             for (var i = 0; i < options.Count; ++i)
