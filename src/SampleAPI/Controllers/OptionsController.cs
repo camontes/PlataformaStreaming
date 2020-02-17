@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
 using SampleAPI.Commands;
@@ -67,6 +68,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(409)]
         public async Task<ActionResult<Option>> CreateOptionAsync(CreateOptionCommand createOptionCommand)
         {
             var questionId = createOptionCommand.QuestionId;
@@ -103,37 +105,79 @@ namespace SampleAPI.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateOptionAsync(int id, UpdateOptionCommand updateOptionCommand)
+        [ProducesResponseType(409)]
+        public async Task<IActionResult> UpdateOptionAsync(CreateOptionCommand createOptionCommand)
         {
-            var existingOption = await _queries.FindByIdAsync(id);
-            if (existingOption == null)
+            var questionId = createOptionCommand.QuestionId;
+            var existingQuestion = await _questionQueries.FindByIdAsync(questionId);
+
+            if (existingQuestion == null)
             {
-                return NotFound();
+                return NotFound("La pregunta no existe");
             }
 
-            Option optionUpdated = _mapper.Map<Option>(existingOption);
-            _mapper.Map(updateOptionCommand, optionUpdated);
-            await _behavior.UpdateOptionAsync(optionUpdated);
-            return NoContent();
+            List<OptionList> options = createOptionCommand.Options;
+            var counter = 0;
+            for (var i = 0; i < options.Count; ++i)
+            {
+                if (options[i].IsCorrect == true) counter++;
+            }
+
+            if (counter > 1)
+            {
+                return Conflict("Solo se admite una pregunta verdadera");
+            }
+
+            var existingOptionsByQuestionId = await _queries.GetAllByQuestionIdAsync(questionId);
+
+            if(existingOptionsByQuestionId == null)
+            {
+                return NotFound("La pregunta no tiene opciones, es posible que ya no existan");
+            }
+
+            for (var i = 0; i < existingOptionsByQuestionId.Count; ++i)
+            {
+                OptionViewModel option = existingOptionsByQuestionId[i];
+                Option optionUpdated = _mapper.Map<Option>(option);
+                _mapper.Map(options[i], optionUpdated);
+                await _behavior.UpdateOptionAsync(optionUpdated);
+            }
+
+            return Ok();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> DeleteOptionAsync(int id)
+        [ProducesResponseType(409)]
+        public async Task<ActionResult<List<int>>> DeleteOptionAsync(int id)
         {
-            var existingOption = await _queries.FindByIdAsync(id);
-            if (existingOption == null)
+            List<int> idOptions = new List<int>();
+
+            var existingQuestion = await _questionQueries.FindByIdAsync(id);
+            if (existingQuestion == null)
             {
-                return NotFound();
+                return NotFound("La pregunta no existe");
+            }
+            var existingOptionsByQuestionId = await _queries.GetAllByQuestionIdAsync(id);
+
+            if (existingOptionsByQuestionId.Count == 0)
+            {
+                return NotFound("La pregunta no tiene opciones, es posible que ya no existan");
             }
 
-            Option optionDeleted = _mapper.Map<Option>(existingOption);
-            await _behavior.DeleteOptionAsync(optionDeleted);
-            return NoContent();
+            for (var i = 0; i < existingOptionsByQuestionId.Count; ++i)
+            {
+                OptionViewModel option = existingOptionsByQuestionId[i];
+                idOptions.Add(option.Id);
+                Option optionUpdated = _mapper.Map<Option>(option);
+                await _behavior.DeleteOptionAsync(optionUpdated);
+            }
+            return idOptions;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace SampleAPI.Controllers
             var existingQuestion = await _queries.FindByIdAsync(id);
             if (existingQuestion == null)
             {
-                return NotFound();
+                return NotFound("La pregunta no existe");
             }
             return existingQuestion;
         }

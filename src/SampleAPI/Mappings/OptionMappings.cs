@@ -14,6 +14,7 @@ namespace SampleAPI.Mappings
             CreateMap<UpdateOptionCommand, Option>();
             CreateMap<Option, BasicOptionViewModel>();
             CreateMap<OptionViewModel, Option>();
+            CreateMap<OptionList, Option>();
         }
     }
 }
