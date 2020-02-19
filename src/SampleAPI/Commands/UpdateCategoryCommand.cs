@@ -8,11 +8,9 @@ namespace SampleAPI.Commands
 {
     public class UpdateCategoryCommand
     {
+        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        [Required]
-        public bool IsActive { get; set; }
     }
 }

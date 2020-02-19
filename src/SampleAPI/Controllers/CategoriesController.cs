@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
@@ -47,23 +48,25 @@ namespace SampleAPI.Controllers
             return existingCategory;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
+        [ProducesResponseType(200)]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<Category>> CreateCategoryAsync(CreateCategoryCommand createCategoryCommand)
         {
             var category = _mapper.Map<Category>(createCategoryCommand);
             await _behavior.CreateCategoryAsync(category);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = category.Id },
-                _mapper.Map<BasicCategoryViewModel>(category));
+
+            var existingCategory = await _queries.FindByIdAsync(category.Id);
+
+            return existingCategory;
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateCategoryAsync(int id, UpdateCategoryCommand updateCategoryCommand)
+        public async Task<ActionResult<Category>> UpdateCategoryAsync(int id, UpdateCategoryCommand updateCategoryCommand)
         {
             var existingCategory = await _queries.FindByIdAsync(id);
             if (existingCategory == null)
@@ -73,7 +76,10 @@ namespace SampleAPI.Controllers
 
             _mapper.Map(updateCategoryCommand, existingCategory);
             await _behavior.UpdateCategoryAsync(existingCategory);
-            return NoContent();
+
+            var category = await _queries.FindByIdAsync(id);
+
+            return category;
         }
 
         [HttpDelete("{id}")]
