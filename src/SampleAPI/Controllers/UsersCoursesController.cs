@@ -79,10 +79,11 @@ namespace SampleAPI.Controllers
 
         [HttpPost]
         [ProducesResponseType(201)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
-        public async Task<ActionResult<UserCourse>> CreateUserCourseAsync(CreateUserCourseCommand createUserCourseCommand)
+        public async Task<ActionResult<UserCourseViewModel>> CreateUserCourseAsync(CreateUserCourseCommand createUserCourseCommand)
         {
             var username = createUserCourseCommand.Username;
             var courseId = createUserCourseCommand.CourseId;
@@ -92,21 +93,21 @@ namespace SampleAPI.Controllers
 
             if (existingUser == null || existingCourse == null)
             {
-                return NotFound();
+                return NotFound("El usuario no existe o el curso no existe");
             }
 
             var existingRegister = await _queries.FindExistUserCourseAsync(username, courseId);
             if (existingRegister != null)
             {
-                return Conflict();
+                return NoContent();
             }
 
             var userCourse = _mapper.Map<UserCourse>(createUserCourseCommand);
             await _behavior.CreateUserCourseAsync(userCourse);
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
-                new { id = userCourse.Id },
-                _mapper.Map<BasicUserCourseViewModel>(userCourse));
+
+            var createdUserCourse = await _queries.FindByIdAsync(userCourse.Id);
+            //CourseViewModel courseViewModel = _mapper.Map<CourseViewModel>(createdCourse);
+            return createdUserCourse;
         }
 
         [HttpPut("{id}")]
