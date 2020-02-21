@@ -35,10 +35,36 @@ namespace SampleAPI.Queries
             return await _context.UserContents.AsNoTracking()
                 .Select(c => new BasicUserContentViewModel
                 {
+                    Id = c.Id,
                     Username = c.Username,
                     ContentId = c.ContentId
                 })
                 .ToListAsync();
+        }
+
+        public async Task<List<BasicUserContentViewModel>> FindAllUserContenByUsernameAsync(string username)
+        {
+            return await _context.UserContents.AsNoTracking()
+                .Select(c => new BasicUserContentViewModel
+                {
+                    Id = c.Id,
+                    Username = c.Username,
+                    ContentId = c.ContentId
+                })
+                .Where(userContent => userContent.Username == username)
+                .ToListAsync();
+        }
+
+        public async Task<BasicUserContentViewModel> FindUserContenByUsernameContentAsync(int contentId,string username)
+        {
+            return await _context.UserContents.AsNoTracking()
+                .Select(c => new BasicUserContentViewModel
+                {
+                    Id = c.Id,
+                    Username = c.Username,
+                    ContentId = c.ContentId
+                })
+                .FirstOrDefaultAsync(userContent => userContent.Username == username && userContent.ContentId == contentId);
         }
     }
 }

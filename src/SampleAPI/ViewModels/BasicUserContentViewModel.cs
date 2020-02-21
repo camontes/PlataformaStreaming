@@ -8,7 +8,8 @@ namespace SampleAPI.ViewModels
     public class BasicUserContentViewModel
     {
        public int ContentId { get; set; }
+       public int Id { get; set; }
 
-       public string Username { get; set; }
+        public string Username { get; set; }
     }
 }

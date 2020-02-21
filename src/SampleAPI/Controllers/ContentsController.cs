@@ -81,7 +81,7 @@ namespace SampleAPI.Controllers
            
             if (existingContent == null || existingUser == null)
             {
-                return NotFound();
+                return NotFound("Usuario o contenido no existente");
             }
 
             var existingUserContent = await _userContentQueries.FindUserContentAsync(id, username);
@@ -109,7 +109,7 @@ namespace SampleAPI.Controllers
 
             if(userCourseViewModel == null)
             {
-                return NotFound();
+                return NotFound("No estas matriculado al curso");
             }
 
             var userCourse = _mapper.Map<UserCourse>(userCourseViewModel);
