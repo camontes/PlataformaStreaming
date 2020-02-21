@@ -54,7 +54,7 @@ namespace SampleAPI.Controllers
             var existingUserCourse = await _queries.FindByIdAsync(id);
             if (existingUserCourse == null)
             {
-                return NotFound();
+                return NotFound("el curso no existe");
             }
             return existingUserCourse;
         }
@@ -74,6 +74,13 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<IEnumerable<UserCourseViewModel>>> GetAllByCourseIdAsync(int CourseId)
         {
+            var existingCourse = _courseQueries.FindByIdAsync(CourseId);
+
+            if(existingCourse == null)
+            {
+                return NotFound("El curso no existe");
+            }
+
             return await _queries.FindAllByCourseIdAsync(CourseId);
         }
 
