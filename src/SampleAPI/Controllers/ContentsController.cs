@@ -74,20 +74,39 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
-        public async Task<ActionResult<ContentViewModel>> GetReadContentAsync(string username, int id)
+        public async Task<ActionResult<PlayerViewModel>> GetReadContentAsync(string username, int id)
         {
             var existingUser = await _userQueries.FindByUsernameAsync(username);
-            var existingContent = await _queries.FindByIdAsync(id);
+
+            ContentViewModel existingContent = await _queries.FindByIdAsync(id);
            
             if (existingContent == null || existingUser == null)
             {
                 return NotFound("Usuario o contenido no existente");
             }
 
-            var existingUserContent = await _userContentQueries.FindUserContentAsync(id, username);
+            var courseId = existingContent.CourseId;
+
+            // Chequeamos si la matricula existe
+            UserCourseViewModel userCourseViewModel = await _userCourseQueries.FindExistUserCourseAsync(username, courseId);
+
+            if (userCourseViewModel == null)
+            {
+                return NotFound("No estas matriculado al curso");
+            }
+
+            BasicUserContentViewModel existingUserContent = await _userContentQueries.FindUserContentAsync(id, username);
+
             if (existingUserContent != null)
             {
-                return existingContent;
+                PlayerViewModel playerViewModel = new PlayerViewModel
+                {
+                    ContentPlayer = existingContent,
+                    UserCoursePlayer = userCourseViewModel,
+                    UserContentPlayer = existingUserContent
+
+                };
+                return playerViewModel;
             }
 
             UserContent usercontent = new UserContent
@@ -98,25 +117,27 @@ namespace SampleAPI.Controllers
       
             await _userContentBehavior.CreateUserContentAsync(usercontent);
 
-            var courseId = existingContent.CourseId;
+            BasicUserContentViewModel userContentPlayer = await _userContentQueries.FindByIdAsync(usercontent.Id);
+
 
             var countUserContents = await _userContentQueries.CountByContentAsync(courseId, username);
             var countContents = await _queries.CountByCourseIdAsync(courseId);
 
-            // Chequeamos si la matricula existe
-
-            UserCourseViewModel userCourseViewModel = await _userCourseQueries.FindExistUserCourseAsync(username, courseId);
-
-            if(userCourseViewModel == null)
-            {
-                return NotFound("No estas matriculado al curso");
-            }
 
             var userCourse = _mapper.Map<UserCourse>(userCourseViewModel);
 
             await _userCourseBehavior.UpdateProgressUserCourseAsync(userCourse, countUserContents, countContents);
 
-            return existingContent;
+            UserCourseViewModel userCoursePlayer = await _userCourseQueries.FindByIdAsync(userCourse.Id);
+
+            PlayerViewModel updatePlayerViewModel = new PlayerViewModel
+            {
+                ContentPlayer = existingContent,
+                UserCoursePlayer = userCoursePlayer,
+                UserContentPlayer = userContentPlayer
+
+            };
+            return updatePlayerViewModel;
         }
 
         [Route("BySubject/{SubjectId}")]

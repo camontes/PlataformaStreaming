@@ -24,9 +24,15 @@ namespace SampleAPI.Queries
                 .CountAsync();
         }
 
-        public async Task<UserContent> FindUserContentAsync(int id, string username)
+        public async Task<BasicUserContentViewModel> FindUserContentAsync(int id, string username)
         {
             return await _context.UserContents.AsNoTracking()
+                 .Select(c => new BasicUserContentViewModel
+                 {
+                     Id = c.Id,
+                     Username = c.Username,
+                     ContentId = c.ContentId
+                 })
                 .FirstOrDefaultAsync(usercontent => usercontent.Username == username && usercontent.ContentId == id);
         }
 
@@ -65,6 +71,18 @@ namespace SampleAPI.Queries
                     ContentId = c.ContentId
                 })
                 .FirstOrDefaultAsync(userContent => userContent.Username == username && userContent.ContentId == contentId);
+        }
+
+        public async Task<BasicUserContentViewModel> FindByIdAsync(int id)
+        {
+            return await _context.UserContents.AsNoTracking()
+                .Select(c => new BasicUserContentViewModel
+                {
+                    Id = c.Id,
+                    Username = c.Username,
+                    ContentId = c.ContentId
+                })
+                .FirstOrDefaultAsync(userContent => userContent.Id == id);
         }
     }
 }

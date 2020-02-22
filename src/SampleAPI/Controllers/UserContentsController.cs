@@ -67,5 +67,20 @@ namespace SampleAPI.Controllers
 
             return await _queries.FindUserContenByUsernameContentAsync(contentId, username);
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<BasicUserContentViewModel>> GetByIdAsync(int id)
+        {
+            var existingUserContent = await _queries.FindByIdAsync(id);
+
+            if (existingUserContent == null)
+            {
+                return NotFound("El contenido no existe");
+            }
+
+            return existingUserContent;
+        }
     }
 }

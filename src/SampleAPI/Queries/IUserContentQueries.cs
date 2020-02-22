@@ -11,9 +11,11 @@ namespace SampleAPI.Queries
     {
         Task<int> CountByContentAsync(int courseid, string username);
 
-        Task<UserContent> FindUserContentAsync(int id, string username);
+        Task<BasicUserContentViewModel> FindUserContentAsync(int id, string username);
 
         Task<List<BasicUserContentViewModel>> FindAllUserContentAsync();
+
+        Task<BasicUserContentViewModel> FindByIdAsync(int id);
 
         Task<List<BasicUserContentViewModel>> FindAllUserContenByUsernameAsync(string username);
 
