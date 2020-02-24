@@ -65,5 +65,23 @@ namespace SampleAPI.Queries
                 })
                 .Where(question => question.CourseId == courseid).ToListAsync();
         }
+
+        public async Task<List<QuestionViewModel>> GetQuestionExamAsync(int courseid)
+        {
+            return await _context.Questions.AsNoTracking()
+                .Include(c => c.Course)
+                .Select(c => new QuestionViewModel
+                {
+                    Id = c.Id,
+                    Content = c.Content,
+                    CourseId = c.CourseId,
+                    CourseName = c.Course.Name,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                })
+                .Where(question => question.CourseId == courseid)
+                .OrderBy(r => Guid.NewGuid()).Skip(1).Take(5)
+                .ToListAsync();
+        }
     }
 }

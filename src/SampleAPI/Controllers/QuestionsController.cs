@@ -61,6 +61,15 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllByCourseIdAsync(CourseId);
         }
 
+        [Route("QuestionExam/{CourseId}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<QuestionViewModel>>> GetQuestionExamAsync(int CourseId)
+        {
+            return await _queries.GetQuestionExamAsync(CourseId);
+        }
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]

@@ -105,6 +105,32 @@ namespace SampleAPI.Controllers
             return Ok();
         }
 
+        [Route("ValidateExam")]
+        [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<int>> ValidateAnswerExam(AnswersExam answersExam)
+        {
+            int correctAnswers = 0;
+
+            for (var i = 0; i < answersExam.options.Count; i++)
+            {
+                var options = await _queries.FindByIdAsync(answersExam.options[i]);
+
+                if (options == null)
+                {
+                    return NotFound("La opcion no existe");
+                }
+
+                if (options.IsCorrect)
+                {
+                    correctAnswers += 1;
+                }
+            }
+            return correctAnswers;
+        }
+
         [HttpPut]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

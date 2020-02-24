@@ -13,6 +13,8 @@ namespace SampleAPI.Queries
 
         Task<List<QuestionViewModel>> GetAllByCourseIdAsync(int CourseId);
 
+        Task<List<QuestionViewModel>> GetQuestionExamAsync(int CourseId);
+
         Task<QuestionViewModel> FindByIdAsync(int id);
     }
 }

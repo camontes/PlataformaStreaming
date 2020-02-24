@@ -202,7 +202,7 @@ namespace SampleAPI.Controllers
             //validate if exist questions and options of course
 
             var existingquestions = await _questionQueries.GetAllByCourseIdAsync(id);
-            if (existingquestions.Count == 0)
+            if (existingquestions.Count < 4)
             {
                 return NoContent();
             }
