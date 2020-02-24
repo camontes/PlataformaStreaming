@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
@@ -117,10 +118,13 @@ namespace SampleAPI.Controllers
             return createdUserCourse;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPut("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateRatingUserCourseAsync(int id, UpdateUserCourseCommand updateUserCourseCommand)
+        public async Task<ActionResult<UserCourseViewModel>> UpdateRatingUserCourseAsync(int id, UpdateUserCourseCommand updateUserCourseCommand)
         {
 
             var existingUserCourse = await _queries.FindByIdAsync(id);
@@ -147,7 +151,8 @@ namespace SampleAPI.Controllers
             Course courseUpdated = _mapper.Map<Course>(existingCourse);
             await _courseBehavior.UpdateRatingCourseAsync(courseUpdated, averageCourse);
 
-            return NoContent();
+            UserCourseViewModel updateUserCourse = await _queries.FindByIdAsync(userCourseUpdated.Id);
+            return updateUserCourse;
         }
 
         [HttpDelete("{id}")]
