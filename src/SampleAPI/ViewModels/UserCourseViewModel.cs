@@ -13,7 +13,7 @@ namespace SampleAPI.ViewModels
 
         public string CourseName { get; set; }
 
-        public DateTime? CourseDate { get; set; }
+        public DateTime? CoursePostedAt { get; set; }
 
         public string Username { get; set; }
 

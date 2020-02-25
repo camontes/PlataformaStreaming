@@ -22,6 +22,7 @@ namespace SampleAPI.Domain.Managers
             course.IsActive = true;
             course.CreatedAt = DateTime.Now;
             course.UpdatedAt = DateTime.Now;
+            course.PostedAt = null;
             course.Rating = 0;
             course.IsPublished = false;
             await _repository.CreateCourseAsync(course);
@@ -40,6 +41,7 @@ namespace SampleAPI.Domain.Managers
             if (course is null) throw new ArgumentNullException(nameof(course));
 
             course.IsPublished = true;
+            course.PostedAt = DateTime.Now;
             await _repository.UpdatePostCourseAsync(course);
         }
 

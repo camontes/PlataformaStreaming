@@ -35,6 +35,8 @@ namespace SampleAPI.Domain
 
         public DateTime? UpdatedAt { get; set; }
 
+        public DateTime? PostedAt { get; set; }
+
         public double Rating { get; set; }
 
         public bool IsPublished { get; set; }

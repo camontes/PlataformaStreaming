@@ -36,5 +36,8 @@ namespace SampleAPI.ViewModels
 
         public DateTime? UpdatedAt { get; set; }
 
+        public DateTime? PostedAt { get; set; }
+
+
     }
 }

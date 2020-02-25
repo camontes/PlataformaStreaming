@@ -47,6 +47,7 @@ namespace SampleAPI.Infrastructure
                 Rating=0,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
+                PostedAt = null,
                 IsPublished = false
             }
         };
@@ -110,6 +111,36 @@ namespace SampleAPI.Infrastructure
                IsActive=true,
                QuestionId=1,
                IsCorrect=true,
+               CreatedAt = DateTime.Now,
+               UpdatedAt = DateTime.Now
+            },
+            new Option
+            {
+               Id=2,
+               Content="Respuesta Pregunta 2",
+               IsActive=true,
+               QuestionId=1,
+               IsCorrect=false,
+               CreatedAt = DateTime.Now,
+               UpdatedAt = DateTime.Now
+            },
+            new Option
+            {
+               Id=3,
+               Content="Respuesta Pregunta 3",
+               IsActive=true,
+               QuestionId=1,
+               IsCorrect=false,
+               CreatedAt = DateTime.Now,
+               UpdatedAt = DateTime.Now
+            },
+            new Option
+            {
+               Id=4,
+               Content="Respuesta Pregunta 4",
+               IsActive=true,
+               QuestionId=1,
+               IsCorrect=false,
                CreatedAt = DateTime.Now,
                UpdatedAt = DateTime.Now
             }
