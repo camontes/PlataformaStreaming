@@ -23,6 +23,8 @@ namespace SampleAPI.Domain.Models
 
         public int Progress { get; set; }
 
+        public int CorrectAnswers { get; set; }
+
         public int Rating { get; set; }
 
         public DateTime? CreatedAt { get; set; }

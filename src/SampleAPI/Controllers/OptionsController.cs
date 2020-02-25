@@ -22,16 +22,23 @@ namespace SampleAPI.Controllers
 
         private readonly IOptionQueries _queries;
 
+        private readonly IUserCourseQueries _userCourseQueries;
+
         private readonly IQuestionQueries _questionQueries;
 
         private readonly IMapper _mapper;
 
-        public OptionsController(IOptionBehavior behavior, IOptionQueries queries, IQuestionQueries questionQueries, IMapper mapper)
+        public OptionsController(IOptionBehavior behavior,
+            IOptionQueries queries,
+            IQuestionQueries questionQueries,
+            IUserCourseQueries userCourseQueries,
+            IMapper mapper)
         {
             _behavior = behavior;
             _questionQueries = questionQueries;
             _queries = queries;
             _mapper = mapper;
+            _userCourseQueries = userCourseQueries;
         }
 
         [HttpGet]
@@ -112,6 +119,12 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<int>> ValidateAnswerExam(AnswersExam answersExam)
         {
+            var existingUserCourse = await _userCourseQueries.FindByIdAsync(answersExam.userCourseId);
+
+            if (existingUserCourse == null)
+            {
+                return NotFound("La matricula no existe");
+            }
             int correctAnswers = 0;
 
             for (var i = 0; i < answersExam.options.Count; i++)

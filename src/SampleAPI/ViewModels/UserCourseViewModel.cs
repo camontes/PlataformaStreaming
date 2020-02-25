@@ -31,6 +31,8 @@ namespace SampleAPI.ViewModels
 
         public int Progress { get; set; }
 
+        public int CorrectAnswers { get; set; }
+
         public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }

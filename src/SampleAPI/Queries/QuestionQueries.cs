@@ -80,7 +80,7 @@ namespace SampleAPI.Queries
                     UpdatedAt = c.UpdatedAt
                 })
                 .Where(question => question.CourseId == courseid)
-                .OrderBy(r => Guid.NewGuid()).Skip(1).Take(5)
+                .OrderBy(r => Guid.NewGuid()).Take(5)
                 .ToListAsync();
         }
     }

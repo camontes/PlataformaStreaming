@@ -23,6 +23,7 @@ namespace SampleAPI.Domain.Behaviors
             userCourse.CreatedAt = DateTime.Now;
             userCourse.UpdatedAt = DateTime.Now;
             userCourse.IsEnd = false;
+            userCourse.CorrectAnswers = 0;
             userCourse.Rating = 0;
             userCourse.Progress = 0;
 

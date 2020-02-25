@@ -61,6 +61,7 @@ namespace SampleAPI.Infrastructure
                 IsEnd=false,
                 Rating=0,
                 Progress=0,
+                CorrectAnswers = 0,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             }

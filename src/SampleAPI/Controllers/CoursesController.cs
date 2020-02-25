@@ -202,7 +202,7 @@ namespace SampleAPI.Controllers
             //validate if exist questions and options of course
 
             var existingquestions = await _questionQueries.GetAllByCourseIdAsync(id);
-            if (existingquestions.Count < 4)
+            if (existingquestions.Count < 5)
             {
                 return NoContent();
             }
@@ -211,7 +211,7 @@ namespace SampleAPI.Controllers
                 var optionId = existingquestions[i].Id;
                 var existingOptions = await _optionQueries.GetAllByQuestionIdAsync(optionId);
 
-                if (existingOptions.Count <= 1)
+                if (existingOptions.Count < 4)
                 {
                     return NoContent();
                 }
