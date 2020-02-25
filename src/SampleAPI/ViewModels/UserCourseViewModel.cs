@@ -21,6 +21,8 @@ namespace SampleAPI.ViewModels
 
         public string LastNameTeacher { get; set; }
 
+        public string EmailTeacher { get; set; }
+
         public bool IsEnd { get; set; }
 
         public float Rating { get; set; }
