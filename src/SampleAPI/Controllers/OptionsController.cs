@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
+using SampleAPI.Domain.Behaviors;
 using SampleAPI.Domain.Managers;
 using SampleAPI.Domain.Models;
 using SampleAPI.Queries;
@@ -24,6 +25,8 @@ namespace SampleAPI.Controllers
 
         private readonly IUserCourseQueries _userCourseQueries;
 
+        private readonly IUserCourseBehavior _userCourseBehavior;
+
         private readonly IQuestionQueries _questionQueries;
 
         private readonly IMapper _mapper;
@@ -32,13 +35,15 @@ namespace SampleAPI.Controllers
             IOptionQueries queries,
             IQuestionQueries questionQueries,
             IUserCourseQueries userCourseQueries,
-            IMapper mapper)
+            IUserCourseBehavior userCourseBehavior,
+        IMapper mapper)
         {
             _behavior = behavior;
             _questionQueries = questionQueries;
             _queries = queries;
             _mapper = mapper;
             _userCourseQueries = userCourseQueries;
+            _userCourseBehavior = userCourseBehavior;
         }
 
         [HttpGet]
@@ -113,11 +118,11 @@ namespace SampleAPI.Controllers
         }
 
         [Route("ValidateExam")]
-        [HttpPost]
+        [HttpPut]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<int>> ValidateAnswerExam(AnswersExam answersExam)
+        public async Task<ActionResult<UserCourseViewModel>> ValidateAnswerExam(AnswersExam answersExam)
         {
             var existingUserCourse = await _userCourseQueries.FindByIdAsync(answersExam.userCourseId);
 
@@ -141,7 +146,14 @@ namespace SampleAPI.Controllers
                     correctAnswers += 1;
                 }
             }
-            return correctAnswers;
+
+            UserCourse userCourseUpdated = _mapper.Map<UserCourse>(existingUserCourse);
+
+            await _userCourseBehavior.UpdateCorrectAnswersCourseAsync(userCourseUpdated, correctAnswers);
+            
+            UserCourseViewModel userCourseViewModel = await _userCourseQueries.FindByIdAsync(userCourseUpdated.Id);
+
+            return userCourseViewModel;
         }
 
         [HttpPut]

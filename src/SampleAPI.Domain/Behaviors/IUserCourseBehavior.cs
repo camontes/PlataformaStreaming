@@ -10,6 +10,8 @@ namespace SampleAPI.Domain.Behaviors
         Task DeleteUserCourseAsync(UserCourse userCourse);
         Task UpdateRatingUserCourseAsync(UserCourse userCourse);
 
+        Task UpdateCorrectAnswersCourseAsync(UserCourse userCourse, int correctAnswers);
+
         Task UpdateProgressUserCourseAsync(UserCourse userCourse, int countUserContents, int countContents);
     }
 }
