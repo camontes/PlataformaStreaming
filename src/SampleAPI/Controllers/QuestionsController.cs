@@ -90,7 +90,7 @@ namespace SampleAPI.Controllers
                 }
             }
 
-
+            //questions random with options
             Random rnd = new Random();
             while (questionsExam.Count > 0)
             {
