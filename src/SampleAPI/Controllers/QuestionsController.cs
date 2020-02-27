@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +23,21 @@ namespace SampleAPI.Controllers
 
         private readonly ICourseQueries _courseQueries;
 
+        private readonly IOptionQueries _optionQueries;
+
         private readonly IMapper _mapper;
 
-        public QuestionsController(IQuestionBehavior behavior, IQuestionQueries queries, ICourseQueries courseQueries, IMapper mapper)
+        public QuestionsController(IQuestionBehavior behavior,
+            IQuestionQueries queries,
+            ICourseQueries courseQueries,
+            IOptionQueries optionQueries,
+            IMapper mapper)
         {
             _behavior = behavior;
             _queries = queries;
             _mapper = mapper;
             _courseQueries = courseQueries;
+            _optionQueries = optionQueries;
         }
 
         [HttpGet]
@@ -67,7 +75,30 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<IEnumerable<QuestionViewModel>>> GetQuestionExamAsync(int CourseId)
         {
-            return await _queries.GetQuestionExamAsync(CourseId);
+            List<QuestionViewModel> questionsExam = new List<QuestionViewModel>();
+            List<QuestionViewModel> randomizedList = new List<QuestionViewModel>();
+
+            var questions = await _queries.GetAllByCourseIdAsync(CourseId);
+
+            for(var i = 0; i < questions.Count; i++)
+            {
+                var options = await _optionQueries.GetAllByQuestionIdAsync(questions[i].Id);
+
+                if (options.Count != 0)
+                {
+                    questionsExam.Add(questions[i]);
+                }
+            }
+
+
+            Random rnd = new Random();
+            while (questionsExam.Count > 0)
+            {
+                int index = rnd.Next(0, questionsExam.Count); //pick a random item from the master list
+                randomizedList.Add(questionsExam[index]); //place it at the end of the randomized list
+                questionsExam.RemoveAt(index);
+            }
+            return randomizedList.GetRange(0, 5);
         }
 
         [HttpPost]
