@@ -17,6 +17,8 @@ namespace SampleAPI.ViewModels
 
         public int QuestionId { get; set; }
 
+        public int CourseId { get; set; }
+
         public string QuestionContent { get; set; }
 
         public DateTime? CreatedAt { get; set; }

@@ -29,6 +29,7 @@ namespace SampleAPI.Queries
                     IsCorrect = c.IsCorrect,
                     IsActive = c.IsActive,
                     QuestionId = c.QuestionId,
+                    CourseId = c.Question.CourseId,
                     QuestionContent = c.Question.Content,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
@@ -47,6 +48,7 @@ namespace SampleAPI.Queries
                     IsCorrect = c.IsCorrect,
                     IsActive = c.IsActive,
                     QuestionId = c.QuestionId,
+                    CourseId = c.Question.CourseId,
                     QuestionContent = c.Question.Content,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
@@ -65,11 +67,31 @@ namespace SampleAPI.Queries
                     IsCorrect = c.IsCorrect,
                     IsActive = c.IsActive,
                     QuestionId = c.QuestionId,
+                    CourseId = c.Question.CourseId,
                     QuestionContent = c.Question.Content,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt
                 })
                 .Where(option => option.QuestionId == questionid).ToListAsync();
+        }
+
+        public async Task<List<OptionViewModel>> GetAllByCourseIdAsync(int courseId)
+        {
+            return await _context.Options.AsNoTracking()
+                .Include(c => c.Question)
+                .Select(c => new OptionViewModel
+                {
+                    Id = c.Id,
+                    Content = c.Content,
+                    IsCorrect = c.IsCorrect,
+                    IsActive = c.IsActive,
+                    QuestionId = c.QuestionId,
+                    CourseId = c.Question.CourseId,
+                    QuestionContent = c.Question.Content,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                })
+                .Where(option => option.CourseId == courseId).ToListAsync();
         }
     }
 }
