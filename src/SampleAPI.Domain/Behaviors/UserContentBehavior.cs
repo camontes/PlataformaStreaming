@@ -23,6 +23,15 @@ namespace SampleAPI.Domain.Managers
             usercontent.CreatedAt = DateTime.Now;
             await _repository.CreateUserContentAsync(usercontent);
         }
+
+        public async Task UpdateUserContentAsync(UserContent usercontent)
+        {
+            if (usercontent is null) throw new ArgumentNullException(nameof(usercontent));
+
+            usercontent.CreatedAt = DateTime.Now;
+
+            await _repository.UpdateUserContentAsync(usercontent);
+        }
     }
 }
 

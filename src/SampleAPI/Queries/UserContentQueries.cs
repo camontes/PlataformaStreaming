@@ -27,11 +27,14 @@ namespace SampleAPI.Queries
         public async Task<BasicUserContentViewModel> FindUserContentAsync(int id, string username)
         {
             return await _context.UserContents.AsNoTracking()
+                 .Include(c => c.Content)
                  .Select(c => new BasicUserContentViewModel
                  {
                      Id = c.Id,
                      Username = c.Username,
-                     ContentId = c.ContentId
+                     ContentId = c.ContentId,
+                     CreatedAt = c.CreatedAt,
+                     CourseId = c.Content.Subject.CourseId
                  })
                 .FirstOrDefaultAsync(usercontent => usercontent.Username == username && usercontent.ContentId == id);
         }
@@ -39,11 +42,13 @@ namespace SampleAPI.Queries
         public async Task<List<BasicUserContentViewModel>> FindAllUserContentAsync()
         {
             return await _context.UserContents.AsNoTracking()
+                .Include(c => c.Content)
                 .Select(c => new BasicUserContentViewModel
                 {
                     Id = c.Id,
                     Username = c.Username,
-                    ContentId = c.ContentId
+                    ContentId = c.ContentId,
+                    CreatedAt = c.CreatedAt
                 })
                 .ToListAsync();
         }
@@ -51,11 +56,14 @@ namespace SampleAPI.Queries
         public async Task<List<BasicUserContentViewModel>> FindAllUserContenByUsernameAsync(string username)
         {
             return await _context.UserContents.AsNoTracking()
+                .Include(c => c.Content)
                 .Select(c => new BasicUserContentViewModel
                 {
                     Id = c.Id,
                     Username = c.Username,
-                    ContentId = c.ContentId
+                    ContentId = c.ContentId,
+                    CreatedAt = c.CreatedAt,
+                    CourseId = c.Content.Subject.CourseId
                 })
                 .Where(userContent => userContent.Username == username)
                 .ToListAsync();
@@ -64,11 +72,14 @@ namespace SampleAPI.Queries
         public async Task<BasicUserContentViewModel> FindUserContenByUsernameContentAsync(int contentId,string username)
         {
             return await _context.UserContents.AsNoTracking()
+                 .Include(c => c.Content)
                 .Select(c => new BasicUserContentViewModel
                 {
                     Id = c.Id,
                     Username = c.Username,
-                    ContentId = c.ContentId
+                    ContentId = c.ContentId,
+                    CreatedAt = c.CreatedAt,
+                    CourseId = c.Content.Subject.CourseId
                 })
                 .FirstOrDefaultAsync(userContent => userContent.Username == username && userContent.ContentId == contentId);
         }
@@ -76,13 +87,32 @@ namespace SampleAPI.Queries
         public async Task<BasicUserContentViewModel> FindByIdAsync(int id)
         {
             return await _context.UserContents.AsNoTracking()
+                .Include(c => c.Content)
                 .Select(c => new BasicUserContentViewModel
                 {
                     Id = c.Id,
                     Username = c.Username,
-                    ContentId = c.ContentId
+                    ContentId = c.ContentId,
+                    CreatedAt = c.CreatedAt,
+                    CourseId = c.Content.Subject.CourseId
                 })
                 .FirstOrDefaultAsync(userContent => userContent.Id == id);
+        }
+
+        public async Task<BasicUserContentViewModel> FindLastUserContentAsync(int courseId, string username)
+        {
+            return await _context.UserContents.AsNoTracking()
+                .Include(c => c.Content)
+                .Select(c => new BasicUserContentViewModel
+                {
+                    Id = c.Id,
+                    Username = c.Username,
+                    ContentId = c.ContentId,
+                    CreatedAt = c.CreatedAt,
+                    CourseId = c.Content.Subject.CourseId
+                })
+                .OrderByDescending(userContent => userContent.CreatedAt)
+                .FirstOrDefaultAsync(userContent => userContent.Username == username && userContent.CourseId == courseId);
         }
     }
 }

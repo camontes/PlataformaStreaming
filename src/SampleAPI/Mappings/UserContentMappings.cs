@@ -15,6 +15,7 @@ namespace SampleAPI.Mappings
         {
             CreateMap<CreateUserContentCommand, UserContent>();
             CreateMap<UserContent, BasicUserContentViewModel>();
+            CreateMap<BasicUserContentViewModel, UserContent>();
         }
     }
 }

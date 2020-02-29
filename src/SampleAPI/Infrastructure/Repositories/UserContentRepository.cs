@@ -22,6 +22,12 @@ namespace SampleAPI.Infrastructure.Repositories
             _context.UserContents.Add(usercontent);
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateUserContentAsync(UserContent usercontent)
+        {
+            _context.UserContents.Update(usercontent);
+            await _context.SaveChangesAsync();
+        }
     }
 }
 

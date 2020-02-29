@@ -8,5 +8,7 @@ namespace SampleAPI.Domain.Infrastructure.Repositories
     public interface IUserContentRepository
     {
         Task CreateUserContentAsync(UserContent usercontent);
+
+        Task UpdateUserContentAsync(UserContent usercontent);
     }
 }

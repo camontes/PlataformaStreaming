@@ -17,15 +17,18 @@ namespace SampleAPI.Controllers
         private readonly IUserContentQueries _queries;
         private readonly IUserQueries _userQueries;
         private readonly IContentQueries _contentQueries;
+        private readonly ICourseQueries _courseQueries;
 
         public UserContentsController(IUserContentQueries queries,
             IUserQueries userQueries,
             IContentQueries contentQueries,
+            ICourseQueries courseQueries,
             IMapper mapper)
         {
             _queries = queries;
             _userQueries = userQueries;
             _contentQueries = contentQueries;
+            _courseQueries = courseQueries;
         }
 
         [HttpGet]
@@ -67,6 +70,8 @@ namespace SampleAPI.Controllers
 
             return await _queries.FindUserContenByUsernameContentAsync(contentId, username);
         }
+
+
 
         [HttpGet("{id}")]
         [ProducesResponseType(200)]

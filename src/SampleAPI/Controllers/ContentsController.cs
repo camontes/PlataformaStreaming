@@ -32,11 +32,22 @@ namespace SampleAPI.Controllers
 
         private readonly IUserQueries _userQueries;
 
+        private readonly ICourseQueries _courseQueries;
+
         private readonly ISubjectQueries _subjectQueries;
 
         private readonly IMapper _mapper;
 
-        public ContentsController(IContentBehavior behavior, IContentQueries queries, IUserQueries userQueries, ISubjectQueries subjectQueries, IUserContentBehavior userContentBehavior, IUserCourseBehavior userCourseBehavior, IUserContentQueries userContentQueries, IUserCourseQueries userCourseQueries,  IMapper mapper)
+        public ContentsController(IContentBehavior behavior,
+            IContentQueries queries,
+            IUserQueries userQueries,
+            ISubjectQueries subjectQueries,
+            IUserContentBehavior userContentBehavior,
+            IUserCourseBehavior userCourseBehavior,
+            IUserContentQueries userContentQueries,
+            IUserCourseQueries userCourseQueries,
+            ICourseQueries courseQueries,
+            IMapper mapper)
         {
             _behavior = behavior;
             _userContentBehavior = userContentBehavior;
@@ -47,6 +58,7 @@ namespace SampleAPI.Controllers
             _userQueries = userQueries;
             _userContentQueries = userContentQueries;
             _userCourseQueries = userCourseQueries;
+            _courseQueries = courseQueries;
         }
 
         [HttpGet]
@@ -97,13 +109,20 @@ namespace SampleAPI.Controllers
 
             BasicUserContentViewModel existingUserContent = await _userContentQueries.FindUserContentAsync(id, username);
 
+
             if (existingUserContent != null)
             {
+                var userContentUpdate = _mapper.Map<UserContent>(existingUserContent);
+
+                await _userContentBehavior.UpdateUserContentAsync(userContentUpdate);
+
+                var existingUserContentViewModel = await _userContentQueries.FindUserContentAsync(userContentUpdate.Id, username);
+
                 PlayerViewModel playerViewModel = new PlayerViewModel
                 {
                     ContentPlayer = existingContent,
                     UserCoursePlayer = userCourseViewModel,
-                    UserContentPlayer = existingUserContent
+                    UserContentPlayer = existingUserContentViewModel
 
                 };
                 return playerViewModel;
@@ -189,6 +208,33 @@ namespace SampleAPI.Controllers
             var contentViewModel = await _queries.FindByIdAsync(contentUpdated.Id);
 
             return contentViewModel;
+        }
+
+        [Route("GetLastContentDescending/{courseId}/{username}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ContentViewModel>> GetLastContentDescending(int courseId, string username)
+        {
+            var existingUsername = await _userQueries.FindByUsernameAsync(username);
+            var existingCourse = await _courseQueries.FindByIdAsync(courseId);
+
+            if (existingUsername == null || existingCourse == null)
+            {
+                return NotFound("El usuario no existe o el curso no existe");
+            }
+
+            var existingUserContent = await _userContentQueries.FindLastUserContentAsync(courseId, username);
+
+            if (existingUserContent == null)
+            {
+                return NoContent();
+            }
+
+            var existingContent = await _queries.FindByIdAsync(existingUserContent.ContentId);
+
+            return existingContent;
         }
 
         [HttpDelete("{id}")]

@@ -19,7 +19,8 @@ namespace SampleAPI.Queries
 
         public async Task<List<Category>> FindAllAsync()
         {
-            return await _context.Categories.AsNoTracking().ToListAsync();
+            return await _context.Categories.AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Category> FindByIdAsync(int id)

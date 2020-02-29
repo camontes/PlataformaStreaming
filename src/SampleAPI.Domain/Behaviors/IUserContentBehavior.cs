@@ -8,6 +8,8 @@ namespace SampleAPI.Domain.Managers
     public interface IUserContentBehavior
     {
         Task CreateUserContentAsync(UserContent usercontent);
+
+        Task UpdateUserContentAsync(UserContent usercontent);
     }
 }
 

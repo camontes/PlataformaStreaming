@@ -19,6 +19,8 @@ namespace SampleAPI.Queries
 
         Task<List<BasicUserContentViewModel>> FindAllUserContenByUsernameAsync(string username);
 
+        Task<BasicUserContentViewModel> FindLastUserContentAsync(int courseId, string username);
+
         Task<BasicUserContentViewModel> FindUserContenByUsernameContentAsync(int contentId, string username);
     }
 }
