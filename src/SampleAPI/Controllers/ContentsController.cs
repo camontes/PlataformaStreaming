@@ -116,7 +116,7 @@ namespace SampleAPI.Controllers
 
                 await _userContentBehavior.UpdateUserContentAsync(userContentUpdate);
 
-                var existingUserContentViewModel = await _userContentQueries.FindUserContentAsync(userContentUpdate.Id, username);
+                var existingUserContentViewModel = await _userContentQueries.FindUserContentAsync(userContentUpdate.ContentId, username);
 
                 PlayerViewModel playerViewModel = new PlayerViewModel
                 {
