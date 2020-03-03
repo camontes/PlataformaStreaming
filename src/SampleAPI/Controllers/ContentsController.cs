@@ -168,6 +168,15 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllBySubjectIdAsync(SubjectId);
         }
 
+        [Route("ByCourse/{CourseId}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<ContentViewModel>>> GetAllByCourseIdAsync(int CourseId)
+        {
+            return await _queries.GetAllByCourseIdAsync(CourseId);
+        }
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]

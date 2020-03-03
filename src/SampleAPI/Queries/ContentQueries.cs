@@ -75,6 +75,25 @@ namespace SampleAPI.Queries
                 .Where(content => content.SubjectId == subjectid).ToListAsync();
         }
 
+        public async Task<List<ContentViewModel>> GetAllByCourseIdAsync(int courseId)
+        {
+            return await _context.Contents.AsNoTracking()
+                .Include(c => c.Subject)
+                .Select(c => new ContentViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Url = c.Url,
+                    IsActive = c.IsActive,
+                    SubjectId = c.SubjectId,
+                    CourseId = c.Subject.CourseId,
+                    SubjectName = c.Subject.Name,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                })
+                .Where(content => content.CourseId == courseId).ToListAsync();
+        }
+
         public async Task<int> CountByCourseIdAsync(int courseid)
         {
             return await _context.Contents.AsNoTracking()
