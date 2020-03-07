@@ -15,6 +15,8 @@ namespace SampleAPI.Domain
 
         public string Description { get; set; }
 
+        public string Photo { get; set; }
+
         public bool IsActive { get; set; }
 
         public string Username { get; set; }

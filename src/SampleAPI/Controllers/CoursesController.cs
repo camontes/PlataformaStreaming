@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
@@ -34,6 +38,8 @@ namespace SampleAPI.Controllers
 
         private readonly IMapper _mapper;
 
+        IHostingEnvironment _env;
+
         public CoursesController(ICourseBehavior behavior,
                                 IContentQueries contentQueries,
                                 ICourseQueries queries,
@@ -42,7 +48,9 @@ namespace SampleAPI.Controllers
                                 ICategoryQueries categoryQueries,
                                 IOptionQueries optionQueries,
                                 IQuestionQueries questionQueries,
-                                IMapper mapper)
+                                IMapper mapper,
+                                IHostingEnvironment environment
+                                )
         {
             _behavior = behavior;
             _queries = queries;
@@ -53,6 +61,7 @@ namespace SampleAPI.Controllers
             _questionQueries = questionQueries;
             _userQueries = userQueries;
             _mapper = mapper;
+            _env = environment;
         }
 
         [HttpGet]
@@ -103,6 +112,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<CourseViewModel>> CreateCourseAsync(CreateCourseCommand createCourseCommand)
         {
+
             var categoryId = createCourseCommand.CategoryId;
             var username = createCourseCommand.Username;
             var existingCategory = await _categoryQueries.FindByIdAsync(categoryId);
@@ -118,12 +128,50 @@ namespace SampleAPI.Controllers
                 return NotFound("No se puede crear el curso porque el usuario no existe");
             }
 
+
             Course course = _mapper.Map<Course>(createCourseCommand);
             await _behavior.CreateCourseAsync(course);
 
             var createdCourse = await _queries.FindByIdAsync(course.Id);
-            //CourseViewModel courseViewModel = _mapper.Map<CourseViewModel>(createdCourse);
             return createdCourse;
+        }
+
+        [Route("SavePhoto")]
+        [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<string>> SaveCoursePhotoAsync(IFormFile photo)
+        {
+            if (photo != null && photo.Length > 0)
+            {
+                var imagePath = @"/Images/Courses/";
+                var uploadPath = "C:\\Users\\juanCarlos\\source\\repos\\StreamingReact\\public" + imagePath;
+
+                //Create Directory
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+                //Create Uniq file name
+                var uniqFileName = Guid.NewGuid().ToString();
+                var filename = Path.GetFileName(uniqFileName + "." + photo.FileName.Split(".")[1].ToLower());
+                string fullpath = uploadPath + filename;
+
+                //imagePath = imagePath + @"/";
+                var filePath =  Path.Combine(imagePath, filename);
+
+                using (FileStream fileStream = new FileStream(fullpath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(fileStream);
+                }
+
+                return filePath;
+            }
+
+            return "";
+
         }
 
         [EnableCors("_myAllowSpecificOrigins")]
@@ -155,7 +203,7 @@ namespace SampleAPI.Controllers
 
             Course courseUpdated = _mapper.Map<Course>(existingCourse);
             _mapper.Map(updateCourseCommand, courseUpdated);
-            await _behavior.UpdateCourseAsync(courseUpdated);
+            await _behavior.UpdateCourseAsync(courseUpdated, existingCourse.Photo);
 
             var courseViewModel = await _queries.FindByIdAsync(courseUpdated.Id);
 

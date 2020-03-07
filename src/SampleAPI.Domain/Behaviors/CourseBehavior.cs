@@ -28,10 +28,14 @@ namespace SampleAPI.Domain.Managers
             await _repository.CreateCourseAsync(course);
         }
 
-        public async Task UpdateCourseAsync(Course course)
+        public async Task UpdateCourseAsync(Course course, string Photo)
         {
             if (course is null) throw new ArgumentNullException(nameof(course));
 
+            if (course.Photo == "")
+            {
+                course.Photo = Photo;
+            }
             course.UpdatedAt = DateTime.Now;
             await _repository.UpdateCourseAsync(course);
         }
