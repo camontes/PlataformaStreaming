@@ -147,8 +147,8 @@ namespace SampleAPI.Controllers
             if (photo != null && photo.Length > 0)
             {
                 var imagePath = @"/Images/Courses/";
-                // var uploadPath = "C:\\Users\\juanCarlos\\source\\repos\\StreamingReact\\public" + imagePath;
-                var uploadPath = "C:\\Users\\Camilo Lopez\\Documents\\Universidad\\Proyecto de grado\\RepoFrontend\\PlataformaFrontend\\StreamingReact\\public" + imagePath;
+                var uploadPath = "C:\\Users\\juanCarlos\\source\\repos\\StreamingReact\\public" + imagePath;
+                //var uploadPath = "C:\\Users\\Camilo Lopez\\Documents\\Universidad\\Proyecto de grado\\RepoFrontend\\PlataformaFrontend\\StreamingReact\\public" + imagePath;
 
                 //Create Directory
                 if (!Directory.Exists(uploadPath))

@@ -8,6 +8,6 @@ namespace SampleAPI.Domain.Managers
     {
         Task CreateCategoryAsync(Category category);
         Task DeleteCategoryAsync(Category category);
-        Task UpdateCategoryAsync(Category category);
+        Task UpdateCategoryAsync(Category category, string photo);
     }
 }

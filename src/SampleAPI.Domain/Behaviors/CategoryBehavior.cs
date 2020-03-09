@@ -25,9 +25,14 @@ namespace SampleAPI.Domain.Managers
             await _repository.CreateCategoryAsync(category);
         }
 
-        public async Task UpdateCategoryAsync(Category category)
+        public async Task UpdateCategoryAsync(Category category, string photo)
         {
             if (category is null) throw new ArgumentNullException(nameof(category));
+
+            if (category.Photo == "")
+            {
+                category.Photo = photo;
+            }
 
             category.UpdatedAt = DateTime.Now;
             await _repository.UpdateCategoryAsync(category);

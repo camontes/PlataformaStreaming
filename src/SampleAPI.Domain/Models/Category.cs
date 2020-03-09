@@ -14,6 +14,8 @@ namespace SampleAPI.Domain
 
         public string Description { get; set; }
 
+        public string Photo { get; set; }
+
         public bool IsActive { get; set; }
 
         public virtual IEnumerable<Course> Courses { get; set; }

@@ -29,6 +29,7 @@ namespace SampleAPI.Infrastructure
                 Id=1,
                 Name="Video Juegos",
                 Description="En esta categoria encontrarás cursos de Blender y Unreal",
+                Photo = "dsfdfdfggggg",
                 IsActive=true,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
