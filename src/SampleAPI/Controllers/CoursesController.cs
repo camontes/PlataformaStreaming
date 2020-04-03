@@ -213,7 +213,6 @@ namespace SampleAPI.Controllers
 
 
         //validate can be posted
-        //validar si se puede publicar el curso
         [EnableCors("_myAllowSpecificOrigins")]
         [Route("CourseCanBePosted/{id}")]
         [HttpGet]
