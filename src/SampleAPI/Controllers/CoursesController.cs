@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,7 @@ namespace SampleAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CoursesController : ControllerBase
     {
         private readonly ICourseBehavior _behavior;
@@ -66,6 +68,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize("admin:api")]
         public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
