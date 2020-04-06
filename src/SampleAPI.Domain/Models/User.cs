@@ -12,13 +12,7 @@ namespace SampleAPI.Domain
 
         public string Name { get; set; }
 
-        public string LastName { get; set; }
-
         public string Photo { get; set; }
-
-        public string Email { get; set; }
-
-        public bool IsActive { get; set; }
 
         public virtual IEnumerable<UserCourse> UserCourse { get; set; }
 
@@ -26,8 +20,5 @@ namespace SampleAPI.Domain
 
         public virtual IEnumerable<UserContent> UserContent { get; set; }
 
-        public DateTime? CreatedAt { get;  set; }
-
-        public DateTime? UpdatedAt { get; set; }
     }
 }

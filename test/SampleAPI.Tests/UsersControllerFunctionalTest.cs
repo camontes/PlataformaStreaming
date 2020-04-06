@@ -58,7 +58,7 @@ namespace SampleAPI.Tests
             // Prepare
             var createUserCommand = new CreateUserCommand
             {
-                Email = "something@nothing.com"
+                Name = "something@nothing.com"
             };
 
             // Execute
@@ -77,9 +77,7 @@ namespace SampleAPI.Tests
             {
                 Username = "Mr. ejemplo",
                 Name = "ejemplo.",
-                LastName = "SamplePrueba",
                 Photo = "photo.jpg",
-                Email = "sample@bancolombia.com"  
             };
 
             // Execute
@@ -91,9 +89,7 @@ namespace SampleAPI.Tests
             {
                 Username = createUserCommand.Username,
                 Name = createUserCommand.Name,
-                LastName = createUserCommand.LastName,   
                 Photo=createUserCommand.Photo,
-                Email = createUserCommand.Email,
                 IsActive = true
             };
             Assert.Equal(HttpStatusCode.Created, responseCreate.StatusCode);
@@ -108,7 +104,6 @@ namespace SampleAPI.Tests
             var createUserCommand = new CreateUserCommand
             {
                 Username = "MrTest",
-                Email = "something@nothing.com"
             };
 
             // Execute
@@ -124,7 +119,6 @@ namespace SampleAPI.Tests
             var expectedBasicUser = new BasicUserViewModel
             {
                 Username = createUserCommand.Username,
-                Email = createUserCommand.Email,
                 IsActive = true
             };
             Assert.Equal(HttpStatusCode.Created, responseCreate.StatusCode);
@@ -133,10 +127,6 @@ namespace SampleAPI.Tests
             // GetByUsername
             Assert.Equal(HttpStatusCode.OK, responseGetByUsername.StatusCode);
             Assert.Equal(createUserCommand.Username, resultUser.Username);
-            Assert.Equal(createUserCommand.Email, resultUser.Email);
-            Assert.True(resultUser.IsActive);
-            Assert.NotNull(resultUser.CreatedAt);
-            Assert.NotNull(resultUser.UpdatedAt);
         }
 
 

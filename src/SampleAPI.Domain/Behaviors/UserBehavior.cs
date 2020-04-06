@@ -18,10 +18,6 @@ namespace SampleAPI.Domain.Managers
         public async Task CreateUserAsync(User user)
         {
             if (user is null) throw new ArgumentNullException(nameof(user));
-
-            user.IsActive = true;
-            user.CreatedAt = DateTime.Now;
-            user.UpdatedAt = DateTime.Now;
             await _repository.CreateUserAsync(user);
         }
 
@@ -29,7 +25,6 @@ namespace SampleAPI.Domain.Managers
         {
             if (user is null) throw new ArgumentNullException(nameof(user));
 
-            user.UpdatedAt = DateTime.Now;
             await _repository.UpdateUserAsync(user);
         }
 

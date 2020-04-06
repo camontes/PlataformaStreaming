@@ -18,37 +18,15 @@ namespace SampleAPI.Queries
             _context = context;
         }
 
-        public async Task<List<UserViewModel>> FindAllAsync()
+        public async Task<List<User>> FindAllAsync()
         {
             return await _context.Users.AsNoTracking()
-                .Select(c => new UserViewModel
-                {
-                   Username=c.Username,
-                   Name=c.Name,
-                   LastName=c.LastName,
-                   Photo=c.Photo,
-                   Email=c.Email,
-                   IsActive=c.IsActive,
-                   CreatedAt=c.CreatedAt,
-                   UpdatedAt=c.UpdatedAt
-                })
                 .ToListAsync();
         }
 
-        public async Task<UserViewModel> FindByUsernameAsync(string username)
+        public async Task<User> FindByUsernameAsync(string username)
         {
             return await _context.Users.AsNoTracking()
-                 .Select(c => new UserViewModel
-                 {
-                     Username = c.Username,
-                     Name = c.Name,
-                     LastName = c.LastName,
-                     Photo = c.Photo,
-                     Email = c.Email,
-                     IsActive = c.IsActive,
-                     CreatedAt = c.CreatedAt,
-                     UpdatedAt = c.UpdatedAt
-                 })
                 .FirstOrDefaultAsync(user => user.Username == username);
         }
 

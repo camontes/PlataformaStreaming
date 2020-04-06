@@ -9,7 +9,7 @@ namespace SampleAPI.Queries
 {
     public interface IUserQueries
     {
-        Task<List<UserViewModel>> FindAllAsync();
-        Task<UserViewModel> FindByUsernameAsync(string username);
+        Task<List<User>> FindAllAsync();
+        Task<User> FindByUsernameAsync(string username);
     }
 }
