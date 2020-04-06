@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
@@ -51,6 +52,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
+        [Authorize]
         public async Task<ActionResult<User>> CreateUserAsync(CreateUserCommand createUserCommand)
         {
             var existingUser = await _queries.FindByUsernameAsync(createUserCommand.Username);

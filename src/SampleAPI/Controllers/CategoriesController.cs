@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -41,6 +42,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Category>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
@@ -49,6 +51,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("admin:api")]
         public async Task<ActionResult<Category>> GetByIdAsync(int id)
         {
             var existingCategory = await _queries.FindByIdAsync(id);
@@ -65,6 +68,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("admin:api")]
         public async Task<ActionResult<string>> SaveCoursePhotoAsync(IFormFile photo)
         {
             if (photo != null && photo.Length > 0)
@@ -102,6 +106,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [Authorize("admin:api")]
         public async Task<ActionResult<Category>> CreateCategoryAsync(CreateCategoryCommand createCategoryCommand)
         {
             var category = _mapper.Map<Category>(createCategoryCommand);
@@ -115,6 +120,7 @@ namespace SampleAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize("admin:api")]
         public async Task<ActionResult<Category>> UpdateCategoryAsync(int id, UpdateCategoryCommand updateCategoryCommand)
         {
             var existingCategory = await _queries.FindByIdAsync(id);
@@ -136,6 +142,7 @@ namespace SampleAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize("admin:api")]
         public async Task<IActionResult> DeleteCategoryAsync(int id)
         {
             var existingCategory = await _queries.FindByIdAsync(id);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain.Managers;
@@ -34,6 +35,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<SubjectViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
@@ -42,6 +44,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<SubjectViewModel>> GetByIdAsync(int id)
         {
             var existingSubject = await _queries.FindByIdAsync(id);
@@ -56,6 +59,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<SubjectViewModel>>> GetAllByCourseIdAsync(int courseId)
         {
             var existingCourse = await _courseQueries.FindByIdAsync(courseId);
@@ -71,6 +75,7 @@ namespace SampleAPI.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<SubjectViewModel>> CreateSubjectAsync(CreateSubjectCommand createSubjectCommand)
         {
             var courseId = createSubjectCommand.CourseId;
@@ -92,6 +97,7 @@ namespace SampleAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<SubjectViewModel>> UpdateSubjectAsync(int id, UpdateSubjectCommand updateSubjectCommand)
         {
             var existingSubject = await _queries.FindByIdAsync(id);
@@ -112,6 +118,7 @@ namespace SampleAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<IActionResult> DeleteSubjectAsync(int id)
         {
             var existingSubject = await _queries.FindByIdAsync(id);

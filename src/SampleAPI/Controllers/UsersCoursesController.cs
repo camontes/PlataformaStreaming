@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
@@ -42,6 +43,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserCourseViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
@@ -50,6 +52,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<UserCourseViewModel>> GetByIdAsync(int id)
         {
             var existingUserCourse = await _queries.FindByIdAsync(id);
@@ -64,6 +67,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserCourseViewModel>>> GetAllByUsernameAsync(string Username)
         {
             return await _queries.FindAllByUsernameAsync(Username);
@@ -73,6 +77,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserCourseViewModel>>> GetAllByCourseIdAsync(int CourseId)
         {
             var existingCourse = _courseQueries.FindByIdAsync(CourseId);
@@ -91,6 +96,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
+        [Authorize]
         public async Task<ActionResult<UserCourseViewModel>> CreateUserCourseAsync(CreateUserCourseCommand createUserCourseCommand)
         {
             var username = createUserCourseCommand.Username;
@@ -124,6 +130,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<UserCourseViewModel>> UpdateRatingUserCourseAsync(int id, UpdateUserCourseCommand updateUserCourseCommand)
         {
 
@@ -158,6 +165,7 @@ namespace SampleAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<IActionResult> DeleteUserCourseAsync(int id)
         {
             var existingUserCourse = await _queries.FindByIdAsync(id);

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
@@ -48,6 +49,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<OptionViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
@@ -56,6 +58,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<OptionViewModel>> GetByIdAsync(int id)
         {
             var existingOption = await _queries.FindByIdAsync(id);
@@ -70,6 +73,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<IEnumerable<OptionViewModel>>> GetAllByQuestionIdAsync(int QuestionId)
         {
             return await _queries.GetAllByQuestionIdAsync(QuestionId);
@@ -81,6 +85,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<OptionViewModel>>> GetAllByCourseIdAsync(int CourseId)
         {
             return await _queries.GetAllByCourseIdAsync(CourseId);
@@ -92,6 +97,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<Option>> CreateOptionAsync(CreateOptionCommand createOptionCommand)
         {
             var questionId = createOptionCommand.QuestionId;
@@ -133,6 +139,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<UserCourseViewModel>> ValidateAnswerExam(AnswersExam answersExam)
         {
             var existingUserCourse = await _userCourseQueries.FindByIdAsync(answersExam.userCourseId);
@@ -171,6 +178,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
+        [Authorize("teacher:api")]
         public async Task<IActionResult> UpdateOptionAsync(CreateOptionCommand createOptionCommand)
         {
             var questionId = createOptionCommand.QuestionId;
@@ -216,6 +224,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<List<int>>> DeleteOptionAsync(int id)
         {
             List<int> idOptions = new List<int>();

@@ -19,7 +19,6 @@ namespace SampleAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class CoursesController : ControllerBase
     {
         private readonly ICourseBehavior _behavior;
@@ -68,7 +67,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
-        [Authorize("admin:api")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
@@ -77,6 +76,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<CourseViewModel>> GetByIdAsync(int id)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
@@ -91,6 +91,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAllByCategoryIdAsync(int CategoryId)
         {
             return await _queries.GetAllByCategoryIdAsync(CategoryId);
@@ -100,6 +101,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAllByUsernameAsync(string username)
         {
             return await _queries.GetAllByUsernameAsync(username);
@@ -113,6 +115,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<CourseViewModel>> CreateCourseAsync(CreateCourseCommand createCourseCommand)
         {
 
@@ -145,6 +148,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<string>> SaveCoursePhotoAsync(IFormFile photo)
         {
             if (photo != null && photo.Length > 0)
@@ -184,6 +188,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<CourseViewModel>> UpdateCourseAsync(int id, UpdateCourseCommand updateCourseCommand)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
@@ -223,6 +228,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(409)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<CourseViewModel>> CourseCanBePostedAsync(int id)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
@@ -280,6 +286,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(409)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<CourseViewModel>> PostCourseAsync(int id)
         {
             var existingCourse = await _queries.FindByIdAsync(id);
@@ -300,6 +307,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
+        [Authorize("teacher:api")]
         public async Task<IActionResult> DeleteCourseAsync(int id)
         {
             var existingCourse = await _queries.FindByIdAsync(id);

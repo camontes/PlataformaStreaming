@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
@@ -63,6 +64,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ContentViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
@@ -71,6 +73,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<ContentViewModel>> GetByIdAsync(int id)
         {
             var existingContent = await _queries.FindByIdAsync(id);
@@ -86,6 +89,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
+        [Authorize]
         public async Task<ActionResult<PlayerViewModel>> GetReadContentAsync(string username, int id)
         {
             var existingUser = await _userQueries.FindByUsernameAsync(username);
@@ -163,6 +167,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ContentViewModel>>> GetAllBySubjectIdAsync(int SubjectId)
         {
             return await _queries.GetAllBySubjectIdAsync(SubjectId);
@@ -172,6 +177,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ContentViewModel>>> GetAllByCourseIdAsync(int CourseId)
         {
             return await _queries.GetAllByCourseIdAsync(CourseId);
@@ -181,6 +187,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<ContentViewModel>> CreateContentAsync(CreateContentCommand createContentCommand)
         {
             var subjectId = createContentCommand.SubjectId;
@@ -202,6 +209,7 @@ namespace SampleAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<ContentViewModel>> UpdateContentAsync(int id, UpdateContentCommand updateContentCommand)
         {
             var existingContent = await _queries.FindByIdAsync(id);
@@ -224,6 +232,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<ContentViewModel>> GetLastContentDescending(int courseId, string username)
         {
             var existingUsername = await _userQueries.FindByUsernameAsync(username);
@@ -249,6 +258,7 @@ namespace SampleAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<IActionResult> DeleteContentAsync(int id)
         {
             var existingContent = await _queries.FindByIdAsync(id);

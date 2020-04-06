@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
@@ -42,6 +43,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<QuestionViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllAsync();
@@ -50,6 +52,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<QuestionViewModel>> GetByIdAsync(int id)
         {
             var existingQuestion = await _queries.FindByIdAsync(id);
@@ -64,6 +67,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<IEnumerable<QuestionViewModel>>> GetAllByCourseIdAsync(int CourseId)
         {
             return await _queries.GetAllByCourseIdAsync(CourseId);
@@ -73,6 +77,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<QuestionViewModel>>> GetQuestionExamAsync(int CourseId)
         {
             List<QuestionViewModel> questionsExam = new List<QuestionViewModel>();
@@ -105,6 +110,7 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<QuestionViewModel>> CreateQuestionAsync(CreateQuestionCommand createQuestionCommand)
         {
             var courseId = createQuestionCommand.CourseId;
@@ -126,6 +132,7 @@ namespace SampleAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<ActionResult<QuestionViewModel>> UpdateQuestionAsync(int id, UpdateQuestionCommand updateQuestionCommand)
         {
             var existingQuestion = await _queries.FindByIdAsync(id);
@@ -146,6 +153,7 @@ namespace SampleAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize("teacher:api")]
         public async Task<IActionResult> DeleteQuestionAsync(int id)
         {
             var existingQuestion = await _queries.FindByIdAsync(id);

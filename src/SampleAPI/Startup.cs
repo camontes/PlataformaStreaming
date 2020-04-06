@@ -62,6 +62,7 @@ namespace SampleAPI
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("admin:api", policy => policy.Requirements.Add(new HasScopeRequirement("admin:api", domain)));
+                options.AddPolicy("teacher:api", policy => policy.Requirements.Add(new HasScopeRequirement("teacher:api", domain)));
             });
 
             // register the scope authorization handler

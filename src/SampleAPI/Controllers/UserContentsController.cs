@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Queries;
@@ -33,6 +34,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<BasicUserContentViewModel>>> GetAllAsync()
         {
             return await _queries.FindAllUserContentAsync();
@@ -42,6 +44,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<BasicUserContentViewModel>>> GetAllByUsernameAsync(string username)
         {
             var existingUsername = await _userQueries.FindByUsernameAsync(username);
@@ -58,6 +61,7 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<BasicUserContentViewModel>> GetByUsernameContentAsync(int contentId, string username)
         {
             var existingUsername = await _userQueries.FindByUsernameAsync(username);
@@ -76,6 +80,7 @@ namespace SampleAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
+        [Authorize]
         public async Task<ActionResult<BasicUserContentViewModel>> GetByIdAsync(int id)
         {
             var existingUserContent = await _queries.FindByIdAsync(id);
