@@ -106,6 +106,35 @@ namespace SampleAPI.Queries
                 .Where(usercourse => usercourse.Username == username).ToListAsync();
         }
 
+        public async Task<List<UserCourseViewModel>> FindAllStreamingByUser(string username)
+        {
+            return await _context.UsersCourses.AsNoTracking()
+                .Include(c => c.Course)
+                .Include(c => c.User)
+                .Select(c => new UserCourseViewModel
+                {
+                    Id = c.Id,
+                    CourseId = c.CourseId,
+                    CourseName = c.Course.Name,
+                    EnrolledStudents = c.Course.EnrolledStudents,
+                    CoursePostedAt = c.Course.PostedAt,
+                    IsStreaming = c.Course.IsStreaming,
+                    Photo = c.Course.Photo,
+                    Username = c.Username,
+                    NameTeacher = c.Course.User.Name,
+                    EmailTeacher = c.Course.User.Username,
+                    IsEnd = c.IsEnd,
+                    Rating = c.Rating,
+                    Progress = c.Progress,
+                    CorrectAnswers = c.CorrectAnswers,
+                    Description = c.Course.Description,
+                    CategoryName = c.Course.Category.Name,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                })
+                .Where(usercourse => usercourse.Username == username && usercourse.IsStreaming).ToListAsync();
+        }
+
         public async Task<List<UserCourseViewModel>> FindAllByCourseIdAsync(int courseid)
         {
             return await _context.UsersCourses.AsNoTracking()

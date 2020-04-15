@@ -11,6 +11,8 @@ namespace SampleAPI.Queries
     {
         Task<List<UserCourseViewModel>> FindAllAsync();
 
+        Task<List<UserCourseViewModel>> FindAllStreamingByUser(string username);
+
         Task<List<UserCourseViewModel>> FindAllByCourseIdAsync(int courseid);
 
         Task<List<UserCourseViewModel>> FindAllByUsernameAsync(string username);

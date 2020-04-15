@@ -73,6 +73,16 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllByUsernameAsync(Username);
         }
 
+        [Route("StreamingByUsername/{Username}")]
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<UserCourseViewModel>>> GetStreamingByUsernameAsync(string Username)
+        {
+            return await _queries.FindAllStreamingByUser(Username);
+        }
+
         [Route("ByCourse/{CourseId}")]
         [HttpGet]
         [ProducesResponseType(200)]
