@@ -19,6 +19,8 @@ namespace SampleAPI.Domain
 
         public bool IsActive { get; set; }
 
+        public int EnrolledStudents { get; set; }
+
         public string Username { get; set; }
 
         [ForeignKey("Username")]
@@ -42,5 +44,6 @@ namespace SampleAPI.Domain
         public double Rating { get; set; }
 
         public bool IsPublished { get; set; }
+        public bool IsStreaming { get; set; }
     }
 }

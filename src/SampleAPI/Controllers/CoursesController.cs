@@ -219,6 +219,34 @@ namespace SampleAPI.Controllers
             return (courseViewModel);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
+        [Route("Streaming/{id}")]
+        [HttpPut]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(409)]
+        [Authorize("teacher:api")]
+        public async Task<ActionResult<CourseViewModel>> UpdateIsStreamingCourseAsync(int id, UpdateIsStreamingCourseCommand updateIsStreamingCourse)
+        {
+            var existingCourse = await _queries.FindByIdAsync(id);
+            if (existingCourse == null)
+            {
+                return NotFound("el curso no existe");
+            }
+
+            if (!existingCourse.IsPublished)
+            {
+                return Conflict("no se puede hacer en vivo porque el curso no esta publicado");
+            }
+
+            Course courseUpdated = _mapper.Map<Course>(existingCourse);
+            await _behavior.UpdateIsStreamingCourseAsync(courseUpdated, updateIsStreamingCourse.IsStreaming);
+
+            var courseViewModel = await _queries.FindByIdAsync(courseUpdated.Id);
+
+            return (courseViewModel);
+        }
 
         //validate can be posted
         [EnableCors("_myAllowSpecificOrigins")]

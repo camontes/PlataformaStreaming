@@ -29,7 +29,9 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     CourseId = c.CourseId,
                     CourseName = c.Course.Name,
+                    EnrolledStudents = c.Course.EnrolledStudents,
                     CoursePostedAt = c.Course.PostedAt,
+                    IsStreaming = c.Course.IsStreaming,
                     Photo = c.Course.Photo,
                     Username = c.Username,
                     NameTeacher = c.Course.User.Name,
@@ -56,7 +58,9 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     CourseId = c.CourseId,
                     CourseName = c.Course.Name,
+                    EnrolledStudents = c.Course.EnrolledStudents,
                     CoursePostedAt = c.Course.PostedAt,
+                    IsStreaming = c.Course.IsStreaming,
                     Photo = c.Course.Photo,
                     Username = c.Username,
                     NameTeacher = c.Course.User.Name,
@@ -83,7 +87,9 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     CourseId = c.CourseId,
                     CourseName = c.Course.Name,
+                    EnrolledStudents = c.Course.EnrolledStudents,
                     CoursePostedAt = c.Course.PostedAt,
+                    IsStreaming = c.Course.IsStreaming,
                     Photo = c.Course.Photo,
                     Username = c.Username,
                     NameTeacher = c.Course.User.Name,
@@ -110,7 +116,9 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     CourseId = c.CourseId,
                     CourseName = c.Course.Name,
+                    EnrolledStudents = c.Course.EnrolledStudents,
                     CoursePostedAt = c.Course.PostedAt,
+                    IsStreaming = c.Course.IsStreaming,
                     Photo = c.Course.Photo,
                     Username = c.Username,
                     NameTeacher = c.Course.User.Name,
@@ -126,7 +134,6 @@ namespace SampleAPI.Queries
                 })
                 .Where(course => course.CourseId == courseid).ToListAsync();
         }
-
         public async Task<UserCourseViewModel> FindExistUserCourseAsync(string username, int courseid)
         {
             return await _context.UsersCourses.AsNoTracking()
@@ -137,7 +144,9 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     CourseId = c.CourseId,
                     CourseName = c.Course.Name,
+                    EnrolledStudents = c.Course.EnrolledStudents,
                     CoursePostedAt = c.Course.PostedAt,
+                    IsStreaming = c.Course.IsStreaming,
                     Photo = c.Course.Photo,
                     Username = c.Username,
                     NameTeacher = c.Course.User.Name,

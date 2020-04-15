@@ -119,6 +119,9 @@ namespace SampleAPI.Controllers
             var userCourse = _mapper.Map<UserCourse>(createUserCourseCommand);
             await _behavior.CreateUserCourseAsync(userCourse);
 
+            var course = _mapper.Map<Course>(existingCourse);
+            await _courseBehavior.UpdateEnrolledStudentCourseAsync(course);
+
             var createdUserCourse = await _queries.FindByIdAsync(userCourse.Id);
             //CourseViewModel courseViewModel = _mapper.Map<CourseViewModel>(createdCourse);
             return createdUserCourse;

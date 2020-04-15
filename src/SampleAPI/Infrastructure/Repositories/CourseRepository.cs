@@ -28,7 +28,19 @@ namespace SampleAPI.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateEnrolledStudentCourseAsync(Course course)
+        {
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdatePostCourseAsync(Course course)
+        {
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateIsStreamingCourseAsync(Course course)
         {
             _context.Courses.Update(course);
             await _context.SaveChangesAsync();

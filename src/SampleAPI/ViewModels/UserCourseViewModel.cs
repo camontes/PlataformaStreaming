@@ -13,13 +13,15 @@ namespace SampleAPI.ViewModels
 
         public string CourseName { get; set; }
 
+        public int EnrolledStudents { get; set; }
+
         public DateTime? CoursePostedAt { get; set; }
+
+        public bool IsStreaming { get; set; }
 
         public string Username { get; set; }
 
         public string NameTeacher { get; set; }
-
-        public string LastNameTeacher { get; set; }
 
         public string EmailTeacher { get; set; }
 

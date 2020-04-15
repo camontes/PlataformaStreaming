@@ -28,6 +28,7 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
+                    EnrolledStudents = c.EnrolledStudents,
                     Photo = c.Photo,
                     IsActive = c.IsActive,
                     Username = c.User.Username,
@@ -40,7 +41,8 @@ namespace SampleAPI.Queries
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt,
                     PostedAt = c.PostedAt,
-                    IsPublished = c.IsPublished
+                    IsPublished = c.IsPublished,
+                    IsStreaming = c.IsStreaming
                 }).Where(course => course.IsPublished == true)
                    .ToListAsync();
         }
@@ -55,6 +57,7 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
+                    EnrolledStudents = c.EnrolledStudents,
                     Photo = c.Photo,
                     IsActive = c.IsActive,
                     Username = c.User.Username,
@@ -67,7 +70,8 @@ namespace SampleAPI.Queries
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt,
                     PostedAt = c.PostedAt,
-                    IsPublished = c.IsPublished
+                    IsPublished = c.IsPublished,
+                    IsStreaming = c.IsStreaming
                 })
                 .FirstOrDefaultAsync(course => course.Id == id);
         }
@@ -82,6 +86,7 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
+                    EnrolledStudents = c.EnrolledStudents,
                     Photo = c.Photo,
                     IsActive = c.IsActive,
                     Username = c.User.Username,
@@ -94,7 +99,8 @@ namespace SampleAPI.Queries
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt,
                     PostedAt = c.PostedAt,
-                    IsPublished = c.IsPublished
+                    IsPublished = c.IsPublished,
+                    IsStreaming = c.IsStreaming
                 })
                 .Where(course => course.CategoryId == categoryid && course.IsPublished == true).ToListAsync();
         }
@@ -109,6 +115,7 @@ namespace SampleAPI.Queries
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
+                    EnrolledStudents = c.EnrolledStudents,
                     Photo = c.Photo,
                     IsActive = c.IsActive,
                     Username = c.User.Username,
@@ -121,7 +128,8 @@ namespace SampleAPI.Queries
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt,
                     PostedAt = c.PostedAt,
-                    IsPublished = c.IsPublished
+                    IsPublished = c.IsPublished,
+                    IsStreaming = c.IsStreaming
                 })
                 .Where(course => course.Username == username).ToListAsync();
         }

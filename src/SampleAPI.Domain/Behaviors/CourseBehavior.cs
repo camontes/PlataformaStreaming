@@ -23,7 +23,9 @@ namespace SampleAPI.Domain.Managers
             course.CreatedAt = DateTime.Now;
             course.UpdatedAt = DateTime.Now;
             course.PostedAt = null;
+            course.EnrolledStudents = 0;
             course.Rating = 0;
+            course.IsStreaming = false;
             course.IsPublished = false;
             await _repository.CreateCourseAsync(course);
         }
@@ -40,12 +42,29 @@ namespace SampleAPI.Domain.Managers
             await _repository.UpdateCourseAsync(course);
         }
 
+        public async Task UpdateIsStreamingCourseAsync(Course course, bool isStreaming)
+        {
+            if (course is null) throw new ArgumentNullException(nameof(course));
+
+            course.IsStreaming = isStreaming;
+
+            await _repository.UpdateCourseAsync(course);
+        }
+
         public async Task UpdatePostCourseAsync(Course course)
         {
             if (course is null) throw new ArgumentNullException(nameof(course));
 
             course.IsPublished = true;
             course.PostedAt = DateTime.Now;
+            await _repository.UpdatePostCourseAsync(course);
+        }
+
+        public async Task UpdateEnrolledStudentCourseAsync(Course course)
+        {
+            if (course is null) throw new ArgumentNullException(nameof(course));
+
+            course.EnrolledStudents += 1;
             await _repository.UpdatePostCourseAsync(course);
         }
 

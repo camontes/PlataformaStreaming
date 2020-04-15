@@ -15,6 +15,8 @@ namespace SampleAPI.ViewModels
 
         public string Photo { get; set; }
 
+        public int EnrolledStudents { get; set; }
+
         public bool IsActive { get; set; }
 
         public string Username { get; set; }
@@ -33,7 +35,7 @@ namespace SampleAPI.ViewModels
 
         public double Rating { get; set; }
         public bool IsPublished { get; set; }
-
+        public bool IsStreaming { get; set; }
         public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
