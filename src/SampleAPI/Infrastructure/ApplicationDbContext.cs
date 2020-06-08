@@ -30,5 +30,5 @@ namespace SampleAPI.Infrastructure
         {
             modelBuilder.Seed();
         }
-    }
+    }   
 }
