@@ -194,8 +194,18 @@ namespace SampleAPI
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             using (var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
             {
-                if (!context.Database.EnsureCreated())
-                    context.Database.Migrate();
+                // Ensure the database is created.
+                try
+                {
+                    if (!context.Database.EnsureCreated())
+                    {
+                        context.Database.Migrate();
+                    }
+                }
+                catch (Exception e)
+                {
+                    // Do nothing
+                }
             }
             
         }
