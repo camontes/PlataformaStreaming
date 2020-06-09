@@ -182,7 +182,7 @@ namespace SampleAPI
             app.UseAuthentication();
 
             // Ensure db migrations
-            UpdateDatabase(app);
+            //UpdateDatabase(app);
 
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
