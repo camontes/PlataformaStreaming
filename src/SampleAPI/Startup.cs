@@ -182,7 +182,7 @@ namespace SampleAPI
             app.UseAuthentication();
 
             // Ensure db migrations
-            //UpdateDatabase(app);
+            UpdateDatabase(app);
 
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
@@ -191,15 +191,13 @@ namespace SampleAPI
 
         private static void UpdateDatabase(IApplicationBuilder app)
         {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using (var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
             {
-                using (var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
-                {
+                if (!context.Database.EnsureCreated())
                     context.Database.Migrate();
-                }
             }
+            
         }
     }
 }
