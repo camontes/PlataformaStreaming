@@ -5,11 +5,6 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>E:\GitHub\Campis\PlataformaStreaming\src\SampleAPI\SampleAPI.xml</DocumentationFile>
-    <OutputPath>bin\Release\netcoreapp2.2\</OutputPath>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
