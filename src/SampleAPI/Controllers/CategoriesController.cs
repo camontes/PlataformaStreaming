@@ -74,6 +74,7 @@ namespace SampleAPI.Controllers
         {
             return await BlobStorage.UploadImage(photo);
         }
+
         [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
         [ProducesResponseType(200)]
