@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
 using SampleAPI.Domain.Managers;
+using SampleAPI.Infrastructure;
 using SampleAPI.Queries;
 using SampleAPI.ViewModels;
 
@@ -71,35 +72,7 @@ namespace SampleAPI.Controllers
         [Authorize("admin:api")]
         public async Task<ActionResult<string>> SaveCoursePhotoAsync(IFormFile photo)
         {
-            if (photo != null && photo.Length > 0)
-            {
-                var imagePath = @"/Images/Categories/";
-                // var uploadPath = "C:\\Users\\juanCarlos\\source\\repos\\StreamingReact\\public" + imagePath;
-                var uploadPath = "D:\\Repos\\StreamingReact\\public" + imagePath;
-
-                //Create Directory
-                if (!Directory.Exists(uploadPath))
-                {
-                    Directory.CreateDirectory(uploadPath);
-                }
-                //Create Uniq file name
-                var uniqFileName = Guid.NewGuid().ToString();
-                var filename = Path.GetFileName(uniqFileName + "." + photo.FileName.Split(".")[1].ToLower());
-                string fullpath = uploadPath + filename;
-
-                //imagePath = imagePath + @"/";
-                var filePath = Path.Combine(imagePath, filename);
-
-                using (FileStream fileStream = new FileStream(fullpath, FileMode.Create))
-                {
-                    await photo.CopyToAsync(fileStream);
-                }
-
-                return filePath;
-            }
-
-            return "";
-
+            return await BlobStorage.UploadImage(photo);
         }
         [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
