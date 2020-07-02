@@ -26,6 +26,8 @@ namespace SampleAPI.Infrastructure
 
         public DbSet<UserContent> UserContents { get; set; }
 
+        public DbSet<Stream> Streams { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();

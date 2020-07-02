@@ -18,12 +18,23 @@ namespace SampleAPI.Infrastructure
             }
         };
 
+        public static readonly Stream[] streamsSeed = new Stream[]
+        {
+            new Stream
+            {
+                Id = 1,
+                Url = ""
+            }
+        };
        
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
                UsersSeed
             );
+            modelBuilder.Entity<Stream>().HasData(
+              streamsSeed
+           );
         }
     }
 }

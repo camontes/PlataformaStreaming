@@ -144,6 +144,11 @@ namespace SampleAPI
             services.AddScoped<IUserContentBehavior, UserContentBehavior>();
             services.AddScoped<IUserContentRepository, UserContentRepository>();
 
+            // Streams
+            services.AddScoped<IStreamQueries, StreamQueries>();
+            services.AddScoped<IStreamBehavior, StreamBehavior>();
+            services.AddScoped<IStreamRepository, StreamRepository>();
+
             // Add Automapper
             services.AddAutoMapper();
 
