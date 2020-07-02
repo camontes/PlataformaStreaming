@@ -31,6 +31,7 @@ namespace SampleAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<StreamViewModel>> GetAllAsync()
         {
             return await _queries.GetStream();
