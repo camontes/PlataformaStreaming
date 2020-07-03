@@ -143,7 +143,6 @@ namespace SampleAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        [Authorize]
         public async Task<ActionResult<UserCourseViewModel>> UpdateRatingUserCourseAsync(int id, UpdateUserCourseCommand updateUserCourseCommand)
         {
 
