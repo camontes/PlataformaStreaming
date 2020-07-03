@@ -73,7 +73,7 @@ namespace SampleAPI.Domain.Managers
             if (course is null) throw new ArgumentNullException(nameof(course));
 
             course.UpdatedAt = DateTime.Now;
-            course.Rating = Math.Round(averageCourse);
+            course.Rating = Math.Floor(averageCourse * 100) / 100;
             await _repository.UpdateCourseAsync(course);
         }
 
