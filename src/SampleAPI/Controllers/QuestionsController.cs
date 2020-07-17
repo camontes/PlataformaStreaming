@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain;
@@ -41,6 +42,7 @@ namespace SampleAPI.Controllers
             _optionQueries = optionQueries;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [ProducesResponseType(200)]
         [Authorize]
@@ -49,6 +51,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllAsync();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -63,6 +66,7 @@ namespace SampleAPI.Controllers
             return existingQuestion;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByCourse/{CourseId}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -73,6 +77,7 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllByCourseIdAsync(CourseId);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("QuestionExam/{CourseId}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -106,6 +111,7 @@ namespace SampleAPI.Controllers
             return randomizedList.GetRange(0, 5);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -129,6 +135,7 @@ namespace SampleAPI.Controllers
             return (questionViewModel);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -150,6 +157,7 @@ namespace SampleAPI.Controllers
             return (questionViewModel);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

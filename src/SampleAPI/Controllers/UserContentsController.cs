@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Queries;
@@ -32,6 +33,7 @@ namespace SampleAPI.Controllers
             _courseQueries = courseQueries;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [ProducesResponseType(200)]
         [Authorize]
@@ -40,6 +42,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllUserContentAsync();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByUsername/{username}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -57,6 +60,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllUserContenByUsernameAsync(username);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByUsernameContent/{contentId}/{username}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -75,8 +79,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindUserContenByUsernameContentAsync(contentId, username);
         }
 
-
-
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

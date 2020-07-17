@@ -65,6 +65,7 @@ namespace SampleAPI.Controllers
             _env = environment;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [ProducesResponseType(200)]
         [Authorize]
@@ -73,6 +74,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllAsync();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -87,6 +89,7 @@ namespace SampleAPI.Controllers
             return existingCourse;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByCategory/{CategoryId}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -97,6 +100,7 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllByCategoryIdAsync(CategoryId);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByUsername/{username}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -142,6 +146,7 @@ namespace SampleAPI.Controllers
             return createdCourse;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("SavePhoto")]
         [HttpPost]
         [ProducesResponseType(201)]
@@ -280,6 +285,7 @@ namespace SampleAPI.Controllers
 
 
         //validar si se puede publicar el curso
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("PostCourse/{id}")]
         [HttpPut]
         [ProducesResponseType(204)]
@@ -303,6 +309,7 @@ namespace SampleAPI.Controllers
             return (courseViewModel);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

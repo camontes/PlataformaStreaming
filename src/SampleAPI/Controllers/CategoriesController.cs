@@ -41,6 +41,7 @@ namespace SampleAPI.Controllers
             _env = environment;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [ProducesResponseType(200)]
         [Authorize]
@@ -49,6 +50,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllAsync();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -63,6 +65,7 @@ namespace SampleAPI.Controllers
             return existingCategory;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("SavePhoto")]
         [HttpPost]
         [ProducesResponseType(201)]
@@ -91,6 +94,7 @@ namespace SampleAPI.Controllers
             return existingCategory;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -113,6 +117,7 @@ namespace SampleAPI.Controllers
             return category;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

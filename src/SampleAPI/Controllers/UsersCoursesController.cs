@@ -41,6 +41,7 @@ namespace SampleAPI.Controllers
             _userQueries = userQueries;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [ProducesResponseType(200)]
         [Authorize]
@@ -49,6 +50,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllAsync();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -63,6 +65,7 @@ namespace SampleAPI.Controllers
             return existingUserCourse;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByUsername/{Username}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -73,6 +76,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllByUsernameAsync(Username);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("StreamingByUsername/{Username}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -83,6 +87,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllStreamingByUser(Username);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByCourse/{CourseId}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -100,6 +105,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllByCourseIdAsync(CourseId);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(204)]
@@ -174,6 +180,7 @@ namespace SampleAPI.Controllers
             return updateUserCourse;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

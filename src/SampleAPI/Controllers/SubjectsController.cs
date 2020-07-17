@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
 using SampleAPI.Domain.Managers;
@@ -33,6 +34,7 @@ namespace SampleAPI.Controllers
             _courseQueries = courseQueries;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [ProducesResponseType(200)]
         [Authorize]
@@ -41,6 +43,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllAsync();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -55,6 +58,7 @@ namespace SampleAPI.Controllers
             return existingSubject;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByCourse/{courseId}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -72,6 +76,7 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllByCourseIdAsync(courseId);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -94,6 +99,7 @@ namespace SampleAPI.Controllers
             return (subjectViewModel);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -115,6 +121,7 @@ namespace SampleAPI.Controllers
             return (subjectViewModel);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

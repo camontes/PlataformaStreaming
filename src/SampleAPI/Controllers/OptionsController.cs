@@ -47,6 +47,7 @@ namespace SampleAPI.Controllers
             _userCourseBehavior = userCourseBehavior;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [ProducesResponseType(200)]
         [Authorize]
@@ -55,6 +56,7 @@ namespace SampleAPI.Controllers
             return await _queries.FindAllAsync();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -69,6 +71,7 @@ namespace SampleAPI.Controllers
             return existingOption;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByQuestion/{QuestionId}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -79,8 +82,7 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllByQuestionIdAsync(QuestionId);
         }
 
-
-
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ByCourse/{CourseId}")]
         [HttpGet]
         [ProducesResponseType(200)]
@@ -91,6 +93,7 @@ namespace SampleAPI.Controllers
             return await _queries.GetAllByCourseIdAsync(CourseId);
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(201)]
@@ -134,6 +137,7 @@ namespace SampleAPI.Controllers
             return Ok();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("ValidateExam")]
         [HttpPut]
         [ProducesResponseType(201)]
@@ -174,6 +178,7 @@ namespace SampleAPI.Controllers
             return userCourseViewModel;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPut]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

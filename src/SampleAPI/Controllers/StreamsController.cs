@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleAPI.Commands;
@@ -29,6 +30,7 @@ namespace SampleAPI.Controllers
             _behavior = behavior;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [ProducesResponseType(200)]
         [Authorize]
@@ -37,6 +39,7 @@ namespace SampleAPI.Controllers
             return await _queries.GetStream();
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPut]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
