@@ -1,2 +1,2 @@
 # PlataformaStreaming
-Estudiantes pueden matricularse a cursos de programación y recibir clases en vivo
+Students can enroll in programming courses and receive live classes
